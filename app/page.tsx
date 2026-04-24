@@ -70,7 +70,7 @@ export default function IndexPage() {
     <Link href="/" className="flex items-center gap-5 group">
       <div className="relative w-16 h-16 md:w-24 md:h-24 overflow-hidden rounded-full border-2 border-[#D4AF37]/40 bg-zinc-900 shadow-lg shadow-[#D4AF37]/10">
         <Image 
-          src="/download.jpg" 
+          src="/logo.jpg" 
           alt="Luxury Taxi Limo Logo"
           fill
           className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
