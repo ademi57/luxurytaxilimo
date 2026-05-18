@@ -62,29 +62,31 @@ export default function IndexPage() {
     <>
       <main className="min-h-screen bg-[#0A0A0A] text-zinc-100 font-sans selection:bg-[#D4AF37] selection:text-black overflow-x-hidden">
         
-       {/* --- HEADER --- */}
+        {/* --- HEADER --- */}
 <nav className="fixed top-0 left-0 w-full z-[2000] bg-black/90 backdrop-blur-md border-b border-zinc-900">
   <div className="max-w-7xl mx-auto px-5 md:px-6 flex justify-between items-center py-3 md:py-4">
     
-    {/* LOGO VE MARKA ADI (BÜYÜTÜLMÜŞ) */}
-    <Link href="/" className="flex items-center gap-5 group">
-      <div className="relative w-16 h-16 md:w-24 md:h-24 overflow-hidden rounded-full border-2 border-[#D4AF37]/40 bg-zinc-900 shadow-lg shadow-[#D4AF37]/10">
-        <Image 
-          src="/logo.jpg" 
-          alt="Luxury Taxi Limo Logo"
-          fill
-          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
-        />
-      </div>
-      <div className="flex flex-col">
-        <span className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-white leading-none">
-          Luxury <span className="text-[#D4AF37]">Taxi</span> Limo
-        </span>
-        <span className="text-[9px] md:text-[11px] uppercase tracking-[0.4em] text-zinc-500 font-bold mt-1">
-          Premium Chauffeur Service
-        </span>
-      </div>
-    </Link>
+   {/* LOGO VE MARKA ADI */}
+<Link href="/" className="flex items-center gap-5 group">
+  <div className="relative w-16 h-16 md:w-24 md:h-24 overflow-hidden rounded-full border-2 border-[#D4AF37]/40 bg-zinc-900 shadow-lg shadow-[#D4AF37]/10">
+    <Image 
+      src="/logo.jpg" 
+      alt="Luxury Taxi Limo Logo"
+      fill
+      sizes="(max-width: 768px) 64px, 96px" // Eklenen performans kuralı
+      className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+      priority // Logonun ilk saniyede hızlıca yüklenmesini sağlar
+    />
+  </div>
+  <div className="flex flex-col">
+    <span className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-white leading-none">
+      Luxury <span className="text-[#D4AF37]">Taxi</span> Limo
+    </span>
+    <span className="text-[9px] md:text-[11px] uppercase tracking-[0.4em] text-zinc-500 font-bold mt-1">
+      Premium Chauffeur Service
+    </span>
+  </div>
+</Link>
 
     {/* MASAÜSTÜ MENÜ LİNKLERİ */}
     <div className="hidden lg:flex gap-10 text-[11px] uppercase tracking-[0.25em] font-bold opacity-70">
@@ -95,12 +97,35 @@ export default function IndexPage() {
       ))}
     </div>
 
-    {/* MOBİL MENÜ BUTONU */}
-    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="lg:hidden flex flex-col justify-center items-center w-12 h-12 gap-2 outline-none">
-      <motion.span animate={isMenuOpen ? { rotate: 45, y: 10 } : { rotate: 0, y: 0 }} className="w-9 h-[2px] bg-[#D4AF37] block origin-center"/>
-      <motion.span animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }} className="w-9 h-[2px] bg-white block"/>
-      <motion.span animate={isMenuOpen ? { rotate: -45, y: -10 } : { rotate: 0, y: 0 }} className="w-9 h-[2px] bg-[#D4AF37] block origin-center"/>
+    {/* MOBİL MENÜ BUTONU (BURGER) */}
+    <button 
+      onClick={() => setIsMenuOpen(!isMenuOpen)} 
+      className="lg:hidden flex flex-col justify-center items-center w-12 h-12 gap-2 outline-none z-[10001] relative"
+    >
+      <span className={`w-9 h-[2px] bg-[#D4AF37] block transition-all duration-300 ${isMenuOpen ? "rotate-45 translate-y-[10px]" : ""}`}/>
+      <span className={`w-9 h-[2px] bg-white block transition-all duration-300 ${isMenuOpen ? "opacity-0" : ""}`}/>
+      <span className={`w-9 h-[2px] bg-[#D4AF37] block transition-all duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-[10px]" : ""}`}/>
     </button>
+  </div>
+
+  {/* --- ANIMASYONSUZ SAF TAILWIND MOBİL PANEL --- */}
+  <div 
+    className={`fixed inset-0 bg-black/98 backdrop-blur-xl lg:hidden flex flex-col justify-center items-center z-[10000] transition-all duration-300 ${
+      isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
+    }`}
+  >
+    <div className="flex flex-col items-center gap-8 text-center">
+      {navLinks.map((link) => (
+        <Link 
+          key={link.name} 
+          href={link.href} 
+          onClick={() => setIsMenuOpen(false)} 
+          className="text-2xl uppercase tracking-[0.3em] font-black text-zinc-300 hover:text-[#D4AF37] transition-all"
+        >
+          {link.name}
+        </Link>
+      ))}
+    </div>
   </div>
 </nav>
         {/* --- HERO SECTION --- */}
