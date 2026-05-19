@@ -2,6 +2,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
+import MobileMenu from "./components/MobileMenu";
 import { motion, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion";
 import {
   FaCarSide,
@@ -421,58 +422,76 @@ export default function IndexPage() {
         }
       `}</style>
 
-      {/* ═══════════════════════ NAVBAR ═══════════════════════ */}
-      <motion.header
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 100,
-          padding: isScrolled ? "14px 40px" : "24px 40px",
-          background: isScrolled ? "rgba(8,8,8,0.96)" : "transparent",
-          borderBottom: isScrolled ? "1px solid rgba(212,175,55,0.12)" : "none",
-          backdropFilter: isScrolled ? "blur(20px)" : "none",
-          transition: "all 0.5s ease",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        {/* Logo */}
-        <Link href="/" style={{ textDecoration: "none" }}>
-          <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-            <span className="font-display" style={{ fontSize: "22px", fontWeight: 300, color: "#FAFAFA", letterSpacing: "0.08em", fontStyle: "italic" }}>
-              Luxury
-            </span>
-            <span style={{ fontSize: "9px", letterSpacing: "0.45em", color: "#D4AF37", fontWeight: 700, textTransform: "uppercase", marginTop: "2px" }}>
-              TAXI · LIMO
-            </span>
-          </div>
-        </Link>
+     {/* ═══════════════════════ NAVBAR ═══════════════════════ */}
+<motion.header
+  initial={{ y: -80, opacity: 0 }}
+  animate={{ y: 0, opacity: 1 }}
+  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+  style={{
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 100,
+    padding: isScrolled ? "14px 24px" : "24px 24px", // Mobilde taşma yapmaması için sağ/sol padding 24px'e düşürüldü
+    background: isScrolled ? "rgba(8,8,8,0.96)" : "transparent",
+    borderBottom: isScrolled ? "1px solid rgba(212,175,55,0.12)" : "none",
+    backdropFilter: isScrolled ? "blur(20px)" : "none",
+    transition: "all 0.5s ease",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  }}
+>
+  {/* Logo - minWidth ile 'TAXI · LIMO' yazısının mobilde kırılması kesin olarak engellendi */}
+  <Link href="/" style={{ textDecoration: "none", minWidth: "160px" }}>
+    <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+      <span className="font-display" style={{ fontSize: "22px", fontWeight: 300, color: "#FAFAFA", letterSpacing: "0.08em", fontStyle: "italic" }}>
+        Luxury
+      </span>
+      <span style={{ fontSize: "9px", letterSpacing: "0.45em", color: "#D4AF37", fontWeight: 700, textTransform: "uppercase", marginTop: "4px", display: "block" }}>
+        TAXI · LIMO
+      </span>
+    </div>
+  </Link>
 
-        {/* Desktop Nav */}
-        <nav style={{ display: "flex", alignItems: "center", gap: "40px" }} className="hidden md:flex">
-          {navLinks.map((link) => (
-            <a key={link.name} href={link.href} className="nav-link">{link.name}</a>
-          ))}
-        </nav>
+  {/* Desktop Nav - Sadece md (orta boy) ve üzeri ekranlarda görünür */}
+  <nav style={{ display: "flex", alignItems: "center", gap: "40px" }} className="hidden md:flex">
+    {navLinks.map((link) => (
+      <a key={link.name} href={link.href} className="nav-link">{link.name}</a>
+    ))}
+  </nav>
 
-        {/* CTA */}
-        <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <a href="tel:+1234567890" style={{ display: "flex", alignItems: "center", gap: "8px", color: "#D4AF37", fontSize: "11px", letterSpacing: "0.15em", textDecoration: "none" }}>
-            <FaPhone size={10} />
-            <span className="hidden md:block">+1 (800) VIP-LIMO</span>
-          </a>
-          <Link href="/booking" className="btn-gold" style={{ padding: "12px 24px" }}>
-            <span>Book Now</span>
-          </Link>
-        </div>
-      </motion.header>
+  {/* CTA & Mobil Tetikleyici Grubu */}
+  <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+    {/* Telefon Numarası - Küçülen ekranlarda sadece ikon kalır, yazı gizlenir */}
+    <a href="tel:+1234567890" style={{ display: "flex", alignItems: "center", gap: "8px", color: "#D4AF37", fontSize: "11px", letterSpacing: "0.15em", textDecoration: "none" }}>
+      <FaPhone size={10} />
+      <span className="hidden sm:block">+1 (800) VIP-LIMO</span>
+    </a>
 
+    {/* Book Now Butonu - 'hidden md:block' ile mobilde aşağı sarkması tamamen engellendi */}
+    <Link href="/booking" className="btn-gold hidden md:block" style={{ padding: "12px 24px" }}>
+      <span>Book Now</span>
+    </Link>
+
+    {/* Mobil Hamburger Menü Butonu - Doğru state fonksiyonuna (mobileMenuOpen) bağlandı */}
+    <button 
+      onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
+      className="flex flex-col justify-center items-center gap-1.5 md:hidden bg-transparent border-none cursor-pointer z-[10001] p-2"
+    >
+      <span className={`h-0.5 w-6 bg-white transition-all duration-300 ${mobileMenuOpen ? "rotate-45 translate-y-2 bg-[#D4AF37]" : ""}`} />
+      <span className={`h-0.5 w-6 bg-white transition-all duration-300 ${mobileMenuOpen ? "opacity-0" : ""}`} />
+      <span className={`h-0.5 w-6 bg-white transition-all duration-300 ${mobileMenuOpen ? "-rotate-45 -translate-y-2 bg-[#D4AF37]" : ""}`} />
+    </button>
+  </div>
+</motion.header>
+{/* Mobil Menü Bileşeni Tam Buraya Gelecek */}
+      <MobileMenu 
+        isOpen={mobileMenuOpen} 
+        onClose={() => setMobileMenuOpen(false)} 
+        links={navLinks} 
+      />
       <main style={{ background: "var(--black)", color: "var(--white)", overflowX: "hidden" }}>
 
         {/* ═══════════════════════ HERO ═══════════════════════ */}
