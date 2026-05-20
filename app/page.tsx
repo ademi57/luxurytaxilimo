@@ -806,7 +806,7 @@ export default function IndexPage() {
                     <span>Open Reservation Portal</span>
                     <FaArrowRight size={10} />
                   </Link>
-                  <a href="tel:+1800VIPLIMO" className="btn-outline">
+                  <a href="tel:+31655508424" className="btn-outline">
                     <FaPhone size={10} />
                     Call Direct
                   </a>
@@ -854,8 +854,8 @@ export default function IndexPage() {
                 <h4 style={{ fontSize: "10px", letterSpacing: "0.3em", fontWeight: 700, textTransform: "uppercase", color: "#D4AF37", marginBottom: "20px" }}>Contact</h4>
                 <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
                   {[
-                    { icon: FaPhone, text: "+1 (800) VIP-LIMO" },
-                    { icon: FaEnvelope, text: "reservations@luxurylimo.com" },
+                    { icon: FaPhone, text: "+31655508424" },
+                    { icon: FaEnvelope, text: "info@luxurytaxilimo.com" },
                   ].map((c, i) => (
                     <div key={i} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                       <c.icon style={{ color: "#D4AF37", fontSize: "12px" }} />
