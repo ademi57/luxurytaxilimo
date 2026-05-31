@@ -1,25 +1,34 @@
 "use client";
 import React, { useState } from "react";
+import { useLocale, useTranslations } from "next-intl"; 
 import Link from "next/link";
 import Image from "next/image";
-import MobileMenu from "./MobileMenu"; // Yeni menüyü import ettik
+import MobileMenu from "./MobileMenu"; 
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const locale = useLocale(); 
+  const t = useTranslations("Nav"); // JSON içindeki "Nav" bloğunu okur
 
   const navLinks = [
-    { name: "Services", href: "/#services" },
-    { name: "Vehicles", href: "/#vehicles" },
-    { name: "Testimonials", href: "/#testimonials" },
-    { name: "Booking", href: "/booking" },
+    { name: t("services"), href: `/${locale}/#services` },
+    { name: t("vehicles"), href: `/${locale}/#vehicles` },
+    { name: t("testimonials"), href: `/${locale}/#testimonials` },
+    { name: t("booking"), href: `/${locale}/booking` },
+    { name: t("colofon"), href: `/${locale}/colofon` },
+    { name: t("privacy"), href: `/${locale}/privacy` },
   ];
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-[9999] bg-black/90 backdrop-blur-md border-b border-zinc-900">
+    <nav 
+      className="fixed top-0 left-0 w-full z-[9999] backdrop-blur-md border-0 outline-none shadow-none ring-0 transition-colors duration-500"
+      style={{ backgroundColor: "rgba(247, 243, 233, 0.90)", color: "#2D2926" }}
+    >
       <div className="max-w-7xl mx-auto px-5 md:px-6 flex justify-between items-center py-3 md:py-4">
         
-        {/* LOGO VE MARKA ADI */}
-        <Link href="/" className="flex items-center gap-5 group">
+        {/* LOGO */}
+        <Link href={`/${locale}`} className="flex items-center gap-5 group">
           <div className="relative w-16 h-16 md:w-24 md:h-24 overflow-hidden rounded-full border-2 border-[#D4AF37]/40 bg-zinc-900 shadow-lg shadow-[#D4AF37]/10">
             <Image 
               src="/logo.jpg" 
@@ -31,36 +40,42 @@ export default function Header() {
             />
           </div>
           <div className="flex flex-col">
-            <span className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-white leading-none">
+            <span className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#2D2926] leading-none">
               Luxury <span className="text-[#D4AF37]">Taxi</span> Limo
             </span>
-            <span className="text-[9px] md:text-[11px] uppercase tracking-[0.4em] text-zinc-500 font-bold mt-1">
+            <span className="text-[9px] md:text-[11px] uppercase tracking-[0.4em] text-[#5A544D] font-bold mt-1">
               Premium Chauffeur Service
             </span>
           </div>
         </Link>
 
-        {/* MASAÜSTÜ MENÜ LİNKLERİ */}
-        <div className="hidden lg:flex gap-10 text-[11px] uppercase tracking-[0.25em] font-bold opacity-70">
-          {navLinks.map((link) => (
-            <Link key={link.name} href={link.href} className="hover:text-[#D4AF37] hover:opacity-100 transition-all">
-              {link.name}
-            </Link>
-          ))}
-        </div>
+        {/* MENÜLER VE DİL DEĞİŞTİRİCİ */}
+        <div className="flex items-center gap-6">
+          <div className="hidden lg:flex gap-10 text-[12px] uppercase tracking-[0.25em] font-bold text-[#2D2926] items-center">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.name} 
+                href={link.href} 
+                className="hover:text-[#D4AF37] transition-all duration-300"
+              >
+                {link.name}
+              </Link>
+            ))}
+            <LanguageSwitcher />
+          </div>
 
-        {/* MOBİL MENÜ BUTONU (BURGER) */}
-        <button 
-          onClick={() => setIsMenuOpen(!isMenuOpen)} 
-          className="lg:hidden flex flex-col justify-center items-center w-12 h-12 gap-2 outline-none z-[10001] relative"
-        >
-          <span className={`w-9 h-[2px] bg-[#D4AF37] block transition-all duration-300 ${isMenuOpen ? "rotate-45 translate-y-[10px]" : ""}`}/>
-          <span className={`w-9 h-[2px] bg-white block transition-all duration-300 ${isMenuOpen ? "opacity-0" : ""}`}/>
-          <span className={`w-9 h-[2px] bg-[#D4AF37] block transition-all duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-[10px]" : ""}`}/>
-        </button>
+          {/* MOBİL MENÜ BUTONU */}
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)} 
+            className="lg:hidden flex flex-col justify-center items-center w-12 h-12 gap-2 outline-none z-[10001] relative"
+          >
+            <span className={`w-9 h-[2px] bg-[#D4AF37] block transition-all duration-300 ${isMenuOpen ? "rotate-45 translate-y-[10px]" : ""}`}/>
+            <span className={`w-9 h-[2px] bg-[#2D2926] block transition-all duration-300 ${isMenuOpen ? "opacity-0" : ""}`}/>
+            <span className={`w-9 h-[2px] bg-[#D4AF37] block transition-all duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-[10px]" : ""}`}/>
+          </button>
+        </div>
       </div>
 
-      {/* Ayırdığımız Mobil Menüyü Buraya Temizce Yerleştirdik */}
       <MobileMenu 
         isOpen={isMenuOpen} 
         onClose={() => setIsMenuOpen(false)} 

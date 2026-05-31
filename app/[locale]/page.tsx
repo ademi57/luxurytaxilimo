@@ -1,8 +1,6 @@
 "use client";
-import Head from "next/head";
 import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
-import MobileMenu from "./components/MobileMenu";
 import { motion, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion";
 import {
   FaCarSide,
@@ -164,11 +162,11 @@ export default function IndexPage() {
           --gold: #D4AF37;
           --gold-light: #F0D070;
           --gold-dark: #A07820;
-          --black: #080808;
+          --black: rgba(247, 243, 233, 0.90);
           --black-2: #0F0F0F;
           --black-3: #141414;
           --black-4: #1A1A1A;
-          --zinc-800: #27272A;
+          --zinc-800: #27272A;  
           --zinc-600: #52525B;
           --zinc-400: #A1A1AA;
           --zinc-200: #E4E4E7;
@@ -422,76 +420,9 @@ export default function IndexPage() {
         }
       `}</style>
 
-     {/* ═══════════════════════ NAVBAR ═══════════════════════ */}
-<motion.header
-  initial={{ y: -80, opacity: 0 }}
-  animate={{ y: 0, opacity: 1 }}
-  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-  style={{
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 100,
-    padding: isScrolled ? "14px 24px" : "24px 24px", // Mobilde taşma yapmaması için sağ/sol padding 24px'e düşürüldü
-    background: isScrolled ? "rgba(8,8,8,0.96)" : "transparent",
-    borderBottom: isScrolled ? "1px solid rgba(212,175,55,0.12)" : "none",
-    backdropFilter: isScrolled ? "blur(20px)" : "none",
-    transition: "all 0.5s ease",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-  }}
->
-  {/* Logo - minWidth ile 'TAXI · LIMO' yazısının mobilde kırılması kesin olarak engellendi */}
-  <Link href="/" style={{ textDecoration: "none", minWidth: "160px" }}>
-    <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-      <span className="font-display" style={{ fontSize: "22px", fontWeight: 300, color: "#FAFAFA", letterSpacing: "0.08em", fontStyle: "italic" }}>
-        Luxury
-      </span>
-      <span style={{ fontSize: "9px", letterSpacing: "0.45em", color: "#D4AF37", fontWeight: 700, textTransform: "uppercase", marginTop: "4px", display: "block" }}>
-        TAXI · LIMO
-      </span>
-    </div>
-  </Link>
 
-  {/* Desktop Nav - Sadece md (orta boy) ve üzeri ekranlarda görünür */}
-  <nav style={{ display: "flex", alignItems: "center", gap: "40px" }} className="hidden md:flex">
-    {navLinks.map((link) => (
-      <a key={link.name} href={link.href} className="nav-link">{link.name}</a>
-    ))}
-  </nav>
-
-  {/* CTA & Mobil Tetikleyici Grubu */}
-  <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-    {/* Telefon Numarası - Küçülen ekranlarda sadece ikon kalır, yazı gizlenir */}
-    <a href="tel:+1234567890" style={{ display: "flex", alignItems: "center", gap: "8px", color: "#D4AF37", fontSize: "11px", letterSpacing: "0.15em", textDecoration: "none" }}>
-      <FaPhone size={10} />
-      <span className="hidden sm:block">+1 (800) VIP-LIMO</span>
-    </a>
-
-    {/* Book Now Butonu - 'hidden md:block' ile mobilde aşağı sarkması tamamen engellendi */}
-    <Link href="/booking" className="btn-gold hidden md:block" style={{ padding: "12px 24px" }}>
-      <span>Book Now</span>
-    </Link>
-
-    {/* Mobil Hamburger Menü Butonu - Doğru state fonksiyonuna (mobileMenuOpen) bağlandı */}
-    <button 
-      onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
-      className="flex flex-col justify-center items-center gap-1.5 md:hidden bg-transparent border-none cursor-pointer z-[10001] p-2"
-    >
-      <span className={`h-0.5 w-6 bg-white transition-all duration-300 ${mobileMenuOpen ? "rotate-45 translate-y-2 bg-[#D4AF37]" : ""}`} />
-      <span className={`h-0.5 w-6 bg-white transition-all duration-300 ${mobileMenuOpen ? "opacity-0" : ""}`} />
-      <span className={`h-0.5 w-6 bg-white transition-all duration-300 ${mobileMenuOpen ? "-rotate-45 -translate-y-2 bg-[#D4AF37]" : ""}`} />
-    </button>
-  </div>
-</motion.header>
 {/* Mobil Menü Bileşeni Tam Buraya Gelecek */}
-      <MobileMenu 
-        isOpen={mobileMenuOpen} 
-        onClose={() => setMobileMenuOpen(false)} 
-        links={navLinks} 
-      />
+   
       <main style={{ background: "var(--black)", color: "var(--white)", overflowX: "hidden" }}>
 
         {/* ═══════════════════════ HERO ═══════════════════════ */}
@@ -629,7 +560,7 @@ export default function IndexPage() {
             <FadeIn>
               <div style={{ textAlign: "center", marginBottom: "80px" }}>
                 <p className="section-label" style={{ marginBottom: "16px" }}>What We Offer</p>
-                <h2 className="font-display" style={{ fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 300, color: "#FAFAFA", lineHeight: 1.1 }}>
+                <h2 className="font-display" style={{ fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 300, color: "#000000", lineHeight: 1.1 }}>
                   Flawless Service,{" "}
                   <span style={{ fontStyle: "italic" }} className="text-gold-gradient">Every Time</span>
                 </h2>
@@ -744,7 +675,7 @@ export default function IndexPage() {
             <FadeIn>
               <div style={{ textAlign: "center", marginBottom: "80px" }}>
                 <p className="section-label" style={{ marginBottom: "16px" }}>Client Voices</p>
-                <h2 className="font-display" style={{ fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 300, color: "#FAFAFA", lineHeight: 1.1 }}>
+                <h2 className="font-display" style={{ fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 300, color: "#000000", lineHeight: 1.1 }}>
                   Trusted by the{" "}
                   <span style={{ fontStyle: "italic" }} className="text-gold-gradient">Discerning</span>
                 </h2>
@@ -816,79 +747,7 @@ export default function IndexPage() {
           </FadeIn>
         </section>
 
-        {/* ═══════════════════════ FOOTER ═══════════════════════ */}
-        <footer style={{ background: "var(--black)", borderTop: "1px solid rgba(212,175,55,0.1)", padding: "64px 40px 40px" }}>
-          <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-            
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "48px", marginBottom: "64px" }}>
-              
-              {/* Brand */}
-              <div>
-                <div style={{ marginBottom: "24px" }}>
-                  <div className="font-display" style={{ fontSize: "28px", fontWeight: 300, color: "#FAFAFA", fontStyle: "italic", letterSpacing: "0.08em" }}>Luxury</div>
-                  <div style={{ fontSize: "9px", letterSpacing: "0.45em", color: "#D4AF37", fontWeight: 700, textTransform: "uppercase" }}>TAXI · LIMO</div>
-                </div>
-                <p style={{ fontSize: "12px", color: "rgba(250,250,250,0.35)", lineHeight: 1.9, maxWidth: "220px" }}>
-                  The premier choice for discerning clients who demand excellence in every detail.
-                </p>
-              </div>
-
-              {/* Services */}
-              <div>
-                <h4 style={{ fontSize: "10px", letterSpacing: "0.3em", fontWeight: 700, textTransform: "uppercase", color: "#D4AF37", marginBottom: "20px" }}>Services</h4>
-                {["Airport Transfer", "Corporate Travel", "Special Events", "City Tours"].map(s => (
-                  <div key={s} style={{ fontSize: "12px", color: "rgba(250,250,250,0.4)", marginBottom: "10px", letterSpacing: "0.05em", cursor: "pointer" }} className="nav-link">{s}</div>
-                ))}
-              </div>
-
-              {/* Fleet */}
-              <div>
-                <h4 style={{ fontSize: "10px", letterSpacing: "0.3em", fontWeight: 700, textTransform: "uppercase", color: "#D4AF37", marginBottom: "20px" }}>The Fleet</h4>
-                {["Mercedes S-Class", "BMW 7 Series", "Audi A8 L", "Range Rover LWB"].map(v => (
-                  <div key={v} style={{ fontSize: "12px", color: "rgba(250,250,250,0.4)", marginBottom: "10px", letterSpacing: "0.05em" }}>{v}</div>
-                ))}
-              </div>
-
-              {/* Contact */}
-              <div>
-                <h4 style={{ fontSize: "10px", letterSpacing: "0.3em", fontWeight: 700, textTransform: "uppercase", color: "#D4AF37", marginBottom: "20px" }}>Contact</h4>
-                <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-                  {[
-                    { icon: FaPhone, text: "+31655508424" },
-                    { icon: FaEnvelope, text: "info@luxurytaxilimo.com" },
-                  ].map((c, i) => (
-                    <div key={i} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                      <c.icon style={{ color: "#D4AF37", fontSize: "12px" }} />
-                      <span style={{ fontSize: "12px", color: "rgba(250,250,250,0.4)", letterSpacing: "0.05em" }}>{c.text}</span>
-                    </div>
-                  ))}
-                 <div style={{ display: "flex", gap: "16px", marginTop: "8px" }}>
-                {[FaInstagram, FaFacebook, FaLinkedin].map((Icon, i) => (
-                <Icon 
-                 key={i} 
-              style={{ color: "rgba(212,175,55,0.5)", fontSize: "18px", cursor: "pointer", transition: "color 0.3s" }}
-              // e.currentTarget kullanarak doğrudan ikona odaklandık ve SVGElement olarak cast ettik
-               onMouseEnter={e => (e.currentTarget as SVGElement).style.color = "#D4AF37"}
-                onMouseLeave={e => (e.currentTarget as SVGElement).style.color = "rgba(212,175,55,0.5)"}
-              />
-               ))}
-              </div>
-                </div>
-              </div>
-            </div>
-
-            <hr className="gold-rule" style={{ marginBottom: "32px" }} />
-
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px" }}>
-              <p style={{ fontSize: "10px", letterSpacing: "0.3em", color: "rgba(250,250,250,0.2)", textTransform: "uppercase" }}>
-                © 2026 Luxury Taxi Limo · All Rights Reserved
-              </p>
-              <p style={{ fontSize: "10px", letterSpacing: "0.2em", color: "rgba(212,175,55,0.35)", textTransform: "uppercase" }}>
-                Black & Gold Edition
-              </p>
-            </div>
-          </div>
-        </footer>
+        
 
       </main>
     </>

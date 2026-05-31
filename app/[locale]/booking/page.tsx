@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import BookingForm from "../components/BookingForm"; 
+import BookingForm from "../../components/BookingForm";
 
 export default function BookingPage() {
   return (
