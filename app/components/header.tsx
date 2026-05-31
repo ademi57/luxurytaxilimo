@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useLocale, useTranslations } from "next-intl"; 
 import Link from "next/link";
 import Image from "next/image";
@@ -9,16 +9,16 @@ import LanguageSwitcher from "./LanguageSwitcher";
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const locale = useLocale(); 
-  const t = useTranslations("Nav"); // JSON içindeki "Nav" bloğunu okur
+  const t = useTranslations("Nav");
 
-  const navLinks = [
+  const navLinks = useMemo(() => [
     { name: t("services"), href: `/${locale}/#services` },
     { name: t("vehicles"), href: `/${locale}/#vehicles` },
     { name: t("testimonials"), href: `/${locale}/#testimonials` },
     { name: t("booking"), href: `/${locale}/booking` },
     { name: t("colofon"), href: `/${locale}/colofon` },
     { name: t("privacy"), href: `/${locale}/privacy` },
-  ];
+  ], [t, locale]);
 
   return (
     <nav 
@@ -26,18 +26,9 @@ export default function Header() {
       style={{ backgroundColor: "rgba(247, 243, 233, 0.90)", color: "#2D2926" }}
     >
       <div className="max-w-7xl mx-auto px-5 md:px-6 flex justify-between items-center py-3 md:py-4">
-        
-        {/* LOGO */}
         <Link href={`/${locale}`} className="flex items-center gap-5 group">
           <div className="relative w-16 h-16 md:w-24 md:h-24 overflow-hidden rounded-full border-2 border-[#D4AF37]/40 bg-zinc-900 shadow-lg shadow-[#D4AF37]/10">
-            <Image 
-              src="/logo.jpg" 
-              alt="Luxury Taxi Limo Logo"
-              fill
-              sizes="(max-width: 768px) 64px, 96px"
-              className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
-              priority
-            />
+            <Image src="/logo.jpg" alt="Luxury Taxi Limo Logo" fill sizes="(max-width: 768px) 64px, 96px" className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" priority />
           </div>
           <div className="flex flex-col">
             <span className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#2D2926] leading-none">
@@ -49,22 +40,16 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* MENÜLER VE DİL DEĞİŞTİRİCİ */}
         <div className="flex items-center gap-6">
           <div className="hidden lg:flex gap-10 text-[12px] uppercase tracking-[0.25em] font-bold text-[#2D2926] items-center">
             {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
-                href={link.href} 
-                className="hover:text-[#D4AF37] transition-all duration-300"
-              >
+              <Link key={link.name} href={link.href} className="hover:text-[#D4AF37] transition-all duration-300">
                 {link.name}
               </Link>
             ))}
             <LanguageSwitcher />
           </div>
 
-          {/* MOBİL MENÜ BUTONU */}
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)} 
             className="lg:hidden flex flex-col justify-center items-center w-12 h-12 gap-2 outline-none z-[10001] relative"

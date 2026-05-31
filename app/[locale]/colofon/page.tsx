@@ -15,20 +15,20 @@ export default function ColofonPage() {
       <p>Informatie conform de wettelijke verplichtingen:</p>
       
       <h3>Bedrijfsnaam</h3>
-      <p>[Şirket Adı]</p>
+      <p>Taxibedrijf Uyar</p>
       
       <h3>Adres</h3>
-      <p>[Sokak ve Kapı No]</p>
-      <p>[Posta Kodu] [Şehir]</p>
+      <p>Oost-Dorsch 125</p>
+      <p>1504BN Zaandam</p>
       <p>Nederland</p>
       
       <h3>Contact</h3>
-      <p>E-mail: [Email Adresin]</p>
-      <p>Telefoon: [Telefon Numaran]</p>
+      <p>E-mail: info@luxurytaxilimo.com</p>
+      <p>Telefoon: +31 6 38352022</p>
       
       <h3>Registratie</h3>
-      <p>KVK-nummer (KvK): [Hollanda Ticaret Odası Numarası]</p>
-      <p>BTW-identificatienummer: [KDV Numarası]</p>
+      <p>KVK-nummer (KvK): 34156787</p>
+      <p>BTW-identificatienummer: 8438293</p>
       </div>
     </div>
   );
