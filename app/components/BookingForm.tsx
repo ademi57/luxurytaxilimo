@@ -46,8 +46,8 @@ export default function BookingForm() {
   const [heliPassengers, setHeliPassengers] = useState<string>("1");
 
   const vehicles = [
-    { id: "s-class", name: "Mercedes-Benz S-Class", price: "€140", desc: "Max 3 Pax · 2 Bags" },
-    { id: "v-class", name: "Mercedes-Benz V-Class", price: "€180", desc: "Max 7 Pax · 7 Bags" },
+    { id: "s-class", name: "Mercedes-Benz S-Class", desc: "Max 3 Pax · 2 Bags" },
+    { id: "v-class", name: "Mercedes-Benz V-Class", desc: "Max 7 Pax · 7 Bags" },
   ];
 
   // Kara Turları Listesi (Görseller lüks temayla uyumlu, yüksek kaliteli seçildi)
@@ -58,11 +58,8 @@ export default function BookingForm() {
       detail: "Zaanse Schans + Cheese Factory + Volendam", 
       price: "€350 / 5 Hours",
       mapsUrl: "https://www.google.com/maps/dir/Amsterdam/Zaanse+Schans/Volendam/",
-      images: [
-        "https://images.unsplash.com/photo-1601999109332-542b18dbec57?w=400&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1549294413-26f195afcbce?w=400&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=400&auto=format&fit=crop&q=80"
-      ]
+      images: ["/Zaanse Schans.jpg",
+              "/CheeseFactory.jpg"]
     },
     { 
       id: "tour2", 
@@ -71,8 +68,8 @@ export default function BookingForm() {
       price: "€600 / 6 Hours",
       mapsUrl: "https://www.google.com/maps/dir/Amsterdam/Giethoorn/",
       images: [
-        "https://images.unsplash.com/photo-1605538032432-a9f0c8d9baac?w=400&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400&auto=format&fit=crop&q=80"
+        "/giethoorn.jpg",
+        "/giethoorn2.jpg"
       ]
     },
     { 
@@ -82,8 +79,8 @@ export default function BookingForm() {
       price: "€85 / Hour",
       mapsUrl: "https://www.google.com/maps/search/?api=1&query=Amsterdam+Centraal",
       images: [
-        "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?w=400&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1601621915196-26200b0d6bab?w=400&auto=format&fit=crop&q=80"
+        "/amsterdam.jpg",
+        "/amsterdamcity.jpg"
       ]
     },
     { 
@@ -162,7 +159,6 @@ export default function BookingForm() {
       const v = vehicles.find(item => item.id === selectedVehicle);
       payload.category = "Book a Ride";
       payload.selected_item = v?.name || "";
-      payload.price = v?.price || "";
       payload.date = date;
       payload.time = time;
       payload.pickup_location = pickup;
@@ -386,7 +382,7 @@ export default function BookingForm() {
                         <div style={{ color: "#FFF", fontSize: "clamp(14px, 1.2vw, 16px)", fontWeight: 500, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{v.name}</div>
                         <div style={{ color: TEXT_MUTED, fontSize: "clamp(12px, 1.1vw, 14px)", marginTop: "2px" }}>{v.desc}</div>
                       </div>
-                      <span style={{ color: GOLD, fontWeight: 600, whiteSpace: "nowrap", fontSize: "clamp(14px, 1.2vw, 16px)" }}>{v.price}</span>
+                      <span style={{ color: GOLD, fontWeight: 600, whiteSpace: "nowrap", fontSize: "clamp(14px, 1.2vw, 16px)" }}></span>
                     </div>
                   ))}
                 </div>
@@ -397,99 +393,105 @@ export default function BookingForm() {
               </div>
             )}
 
-            {/* 2. MENÜ: TOURS & PACKAGES PANELİ */}
-            {mainTab === "tours" && (
-              <div style={{ width: "100%" }}>
-                <h3 style={{ color: "#FFF", fontSize: "clamp(16px, 1.5vw, 20px)", fontWeight: 500, marginBottom: "4px" }}>Available Private Tours</h3>
-                <p style={{ color: TEXT_MUTED, fontSize: "clamp(12px, 1.1vw, 14px)", marginBottom: "20px" }}>Select a curated luxury experience below</p>
+           {/* 2. MENÜ: TOURS & PACKAGES PANELİ */}
+{mainTab === "tours" && (
+  <div style={{ width: "100%" }}>
+    <h3 style={{ color: "#FFF", fontSize: "clamp(16px, 1.5vw, 20px)", fontWeight: 500, marginBottom: "4px" }}>Available Private Tours</h3>
+    <p style={{ color: TEXT_MUTED, fontSize: "clamp(12px, 1.1vw, 14px)", marginBottom: "20px" }}>Select a curated luxury experience below</p>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "12px", width: "100%" }}>
-                  {landTours.map((tour) => (
-                    <div
-                      key={tour.id}
-                      onClick={() => setSelectedTour(tour.id)}
-                      style={tourCardStyle(selectedTour === tour.id)}
-                    >
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", gap: "12px" }}>
-                        <div style={{ overflow: "hidden" }}>
-                          <div style={{ color: selectedTour === tour.id ? GOLD : "#FFF", fontSize: "clamp(14px, 1.2vw, 16px)", fontWeight: 600, lineHeight: 1.3 }}>
-                            {tour.name}
-                          </div>
-                          <div style={{ color: TEXT_MUTED, fontSize: "clamp(12px, 1.1vw, 14px)", marginTop: "4px" }}>
-                            {tour.detail}
-                          </div>
-                        </div>
-                        <div style={{ textAlign: "right", whiteSpace: "nowrap" }}>
-                          <span style={{ color: "#FFF", fontSize: "clamp(14px, 1.2vw, 16px)", fontWeight: 600, display: "block" }}>
-                            {tour.price.split(" / ")[0]}
-                          </span>
-                          {tour.price.split(" / ")[1] && (
-                            <span style={{ color: TEXT_MUTED, fontSize: "clamp(11px, 1vw, 13px)" }}>
-                              /{tour.price.split(" / ")[1]}
-                            </span>
-                          )}
-                        </div>
-                      </div>
+    <div style={{ display: "flex", flexDirection: "column", gap: "16px", width: "100%" }}>
+      {landTours.map((tour) => (
+        <div
+          key={tour.id}
+          onClick={() => setSelectedTour(tour.id)}
+          style={{
+            ...tourCardStyle(selectedTour === tour.id),
+            display: "flex",
+            flexDirection: "column",
+            gap: "12px",
+            padding: "16px"
+          }}
+        >
+          {/* ÜST BÖLÜM: FOTOĞRAF SLIDER'I */}
+          {tour.images && tour.images.length > 0 && (
+            <div style={{ 
+              display: "flex", 
+              gap: "10px", 
+              overflowX: "auto",
+              paddingBottom: "4px",
+              scrollbarWidth: "none", // Firefox için scrollbar gizleme
+              borderRadius: "8px"
+            }}>
+              {tour.images.map((imgUrl, index) => (
+                <img 
+                  key={index} 
+                  src={imgUrl} 
+                  alt={`${tour.name} photo`} 
+                  style={{
+                    minWidth: "200px",
+                    height: "120px",
+                    objectFit: "cover",
+                    borderRadius: "8px",
+                    border: `1px solid ${selectedTour === tour.id ? GOLD : BORDER}`
+                  }}
+                />
+              ))}
+            </div>
+          )}
 
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation(); 
-                          window.open(tour.mapsUrl, "_blank", "noopener,noreferrer");
-                        }}
-                        style={mapsButtonStyle}
-                      >
-                        🗺️ View Route on Google Maps ↗
-                      </button>
-
-                      {/* GOOGLE MAPS FOTOĞRAFLARI ALANI */}
-                      {tour.images && tour.images.length > 0 && (
-                        <div style={{ 
-                          display: "flex", 
-                          gap: "8px", 
-                          marginTop: "4px", 
-                          overflowX: "auto",
-                          paddingBottom: "4px",
-                          scrollbarWidth: "none"
-                        }}>
-                          {tour.images.map((imgUrl, index) => (
-                            <img 
-                              key={index} 
-                              src={imgUrl} 
-                              alt={`${tour.name} preview`} 
-                              style={{
-                                width: "120px",
-                                height: "75px",
-                                objectFit: "cover",
-                                borderRadius: "6px",
-                                border: `1px solid ${BORDER}`,
-                                opacity: selectedTour === tour.id ? 0.9 : 0.5,
-                                transition: "all 0.3s ease"
-                              }}
-                            />
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "20px", width: "100%" }}>
-                  <div style={{ flex: "1 1 200px" }}>
-                    <label style={{ display: "block", color: TEXT_MUTED, fontSize: "clamp(11px, 1vw, 13px)", textTransform: "uppercase", marginBottom: "6px" }}>Tour Date</label>
-                    <input type="date" value={tourDate} onChange={(e) => setTourDate(e.target.value)} style={inputStyle} />
-                  </div>
-                  <div style={{ flex: "1 1 200px" }}>
-                    <label style={{ display: "block", color: TEXT_MUTED, fontSize: "clamp(11px, 1vw, 13px)", textTransform: "uppercase", marginBottom: "6px" }}>Passengers</label>
-                    <input type="number" placeholder="1" min="1" max="7" value={tourPassengers} onChange={(e) => setTourPassengers(e.target.value)} style={inputStyle} />
-                  </div>
-                </div>
-
-                <button type="submit" disabled={loading} style={actionButtonStyle}>
-                  {loading ? "Processing..." : "Book Selected Private Tour"}
-                </button>
+          {/* ORTA BÖLÜM: BAŞLIK, DETAY VE FİYAT */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", width: "100%", gap: "12px" }}>
+            <div style={{ overflow: "hidden" }}>
+              <div style={{ color: selectedTour === tour.id ? GOLD : "#FFF", fontSize: "clamp(15px, 1.3vw, 17px)", fontWeight: 700 }}>
+                {tour.name}
               </div>
-            )}
+              <div style={{ color: TEXT_MUTED, fontSize: "clamp(12px, 1.1vw, 14px)", marginTop: "4px" }}>
+                {tour.detail}
+              </div>
+            </div>
+            <div style={{ textAlign: "right", whiteSpace: "nowrap" }}>
+              <span style={{ color: GOLD, fontSize: "clamp(16px, 1.5vw, 18px)", fontWeight: 700, display: "block" }}>
+                {tour.price.split(" / ")[0]}
+              </span>
+            </div>
+          </div>
+
+          {/* ALT BÖLÜM: ROUTE BUTONU */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation(); 
+              window.open(tour.mapsUrl, "_blank", "noopener,noreferrer");
+            }}
+            style={{
+              ...mapsButtonStyle,
+              width: "100%",
+              marginTop: "4px"
+            }}
+          >
+            🗺️ View Route on Google Maps
+          </button>
+        </div>
+      ))}
+    </div>
+
+    {/* TARİH VE YOLCU SEÇİMİ */}
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "24px", width: "100%" }}>
+      <div style={{ flex: "1 1 200px" }}>
+        <label style={{ display: "block", color: TEXT_MUTED, fontSize: "11px", textTransform: "uppercase", marginBottom: "6px" }}>Tour Date</label>
+        <input type="date" value={tourDate} onChange={(e) => setTourDate(e.target.value)} style={inputStyle} />
+      </div>
+      <div style={{ flex: "1 1 200px" }}>
+        <label style={{ display: "block", color: TEXT_MUTED, fontSize: "11px", textTransform: "uppercase", marginBottom: "6px" }}>Passengers</label>
+        <input type="number" placeholder="1" min="1" max="7" value={tourPassengers} onChange={(e) => setTourPassengers(e.target.value)} style={inputStyle} />
+      </div>
+    </div>
+
+    <button type="submit" disabled={loading} style={actionButtonStyle}>
+      {loading ? "Processing..." : "Book Selected Private Tour"}
+    </button>
+  </div>
+)}
 
             {/* 3. MENÜ: HELICOPTER TOURS PANELİ */}
             {mainTab === "helicopter" && (
