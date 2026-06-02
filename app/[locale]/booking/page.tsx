@@ -7,9 +7,14 @@ import BookingForm from "../../components/BookingForm";
 import TouristSlider from "../../components/TouristSlider";
 
 export default function BookingPage() {
+  const paypalClientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
+
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-zinc-100 font-sans selection:bg-[#D4AF37] selection:text-black overflow-x-hidden pt-32 pb-20">
-     
+      
+      {/* PayPal SDK Scripti */}
+      <script src={`https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=EUR`} async></script>
+
       {/* --- REZERVASYON SAYFASI HEADER --- */}
       <nav className="fixed top-0 left-0 w-full z-[2000] bg-black/90 backdrop-blur-md border-b border-zinc-900">
         <div className="max-w-7xl mx-auto px-5 md:px-6 flex justify-between items-center py-3 md:py-4">
@@ -62,9 +67,11 @@ export default function BookingPage() {
           <BookingForm />
         </div>
       </div>
- <div className="mt-20">
+
+      <div className="mt-20">
         <TouristSlider />
       </div>
+
       {/* FOOTER NOTU */}
       <div className="text-center mt-16">
         <p className="text-[9px] tracking-[0.4em] uppercase text-zinc-650">

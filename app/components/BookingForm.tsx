@@ -80,7 +80,7 @@ export default function BookingForm() {
       mapsUrl: "https://www.google.com/maps/search/?api=1&query=Amsterdam+Centraal",
       images: [
         "/amsterdam.jpg",
-        "/amsterdamcity.jpg"
+        "/amsterdam2.jpg"
       ]
     },
     { 
