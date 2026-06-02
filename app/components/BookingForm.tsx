@@ -45,6 +45,35 @@ export default function BookingForm() {
   const [heliDate, setHeliDate] = useState<string>("");
   const [heliPassengers, setHeliPassengers] = useState<string>("1");
 
+const heroSlides = {
+  ride: [
+    "https://images.unsplash.com/photo-1549921296-3a6b8a1a9f8f?w=1200",
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1200",
+    "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200"
+  ],
+  tours: [
+    "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?w=1200",
+    "https://images.unsplash.com/photo-1605538032432-a9f0c8d9baac?w=1200",
+    "https://images.unsplash.com/photo-1526481280695-3c687fd5432c?w=1200"
+  ],
+  helicopter: [
+    "https://images.unsplash.com/photo-1508849789987-4e5333c12b78?w=1200",
+    "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=1200"
+  ]
+};
+
+const [heroIndex, setHeroIndex] = useState(0);
+
+React.useEffect(() => {
+  const interval = setInterval(() => {
+    setHeroIndex((prev) => {
+      const slides = heroSlides[mainTab];
+      return (prev + 1) % slides.length;
+    });
+  }, 4000);
+
+  return () => clearInterval(interval);
+}, [mainTab]);
   const vehicles = [
     { id: "s-class", name: "Mercedes-Benz S-Class", price: "€140", desc: "Max 3 Pax · 2 Bags" },
     { id: "v-class", name: "Mercedes-Benz V-Class", price: "€180", desc: "Max 7 Pax · 7 Bags" },
@@ -242,6 +271,87 @@ export default function BookingForm() {
           boxSizing: "border-box",
           width: "100%"
         }}>
+          <div
+  style={{
+    position: "relative",
+    height: "260px",
+    borderRadius: "18px",
+    overflow: "hidden",
+    marginBottom: "24px",
+    border: `1px solid ${BORDER}`
+  }}
+>
+  <img
+    src={
+      mainTab === "ride"
+        ? "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200"
+        : mainTab === "tours"
+        ? "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?w=1200"
+        : "https://images.unsplash.com/photo-1508849789987-4e5333c12b78?w=1200"
+    }
+    alt=""
+    style={{
+      width: "100%",
+      height: "100%",
+      objectFit: "cover"
+    }}
+  />
+
+  <div
+    style={{
+      position: "absolute",
+      inset: 0,
+      background:
+        "linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.15))"
+    }}
+  />
+
+  <div
+    style={{
+      position: "absolute",
+      bottom: "20px",
+      left: "20px",
+      right: "20px"
+    }}
+  >
+    <div
+      style={{
+        color: GOLD,
+        fontSize: "12px",
+        letterSpacing: "2px",
+        textTransform: "uppercase",
+        marginBottom: "8px"
+      }}
+    >
+      Premium Experiences
+    </div>
+
+    <h2
+      style={{
+        color: "#fff",
+        margin: 0,
+        fontSize: "28px",
+        lineHeight: 1.2
+      }}
+    >
+      {mainTab === "ride"
+        ? "Luxury Chauffeur Service"
+        : mainTab === "tours"
+        ? "Private Amsterdam Tours"
+        : "Helicopter Experiences"}
+    </h2>
+
+    <p
+      style={{
+        color: "#ddd",
+        marginTop: "10px",
+        marginBottom: 0
+      }}
+    >
+      ★★★★★ 4.9 · Private Service · Instant Request
+    </p>
+  </div>
+</div>
           <div>
             <span style={{ color: GOLD, fontSize: "clamp(11px, 1vw, 13px)", fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase" }}>
               Luxury Taxi Limo
@@ -267,7 +377,195 @@ export default function BookingForm() {
                 style={menuButtonStyle(mainTab === "tours")}
               >
                 <span>🌍 Tours & Packages</span>
-                {mainTab === "tours" && <span style={{ fontSize: "10px" }}>●</span>}
+                {mainTab === "tours" && (
+  <div style={{ width: "100%" }}>
+    <h3
+      style={{
+        color: "#FFF",
+        fontSize: "clamp(16px, 1.5vw, 20px)",
+        fontWeight: 500,
+        marginBottom: "6px"
+      }}
+    >
+      Available Private Tours
+    </h3>
+
+    <p
+      style={{
+        color: TEXT_MUTED,
+        fontSize: "clamp(12px, 1.1vw, 14px)",
+        marginBottom: "20px"
+      }}
+    >
+      Select a curated luxury experience below
+    </p>
+
+    <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+      {landTours.map((tour) => {
+        const isSelected = selectedTour === tour.id;
+
+        return (
+          <div
+            key={tour.id}
+            onClick={() => setSelectedTour(tour.id)}
+            style={{
+              border: `1px solid ${isSelected ? GOLD : BORDER}`,
+              background: isSelected
+                ? "rgba(197,168,128,0.05)"
+                : "transparent",
+              borderRadius: "16px",
+              overflow: "hidden",
+              cursor: "pointer",
+              transition: "all 0.25s ease"
+            }}
+          >
+            {/* IMAGE */}
+            <div
+              style={{
+                width: "100%",
+                height: "200px",
+                overflow: "hidden"
+              }}
+            >
+              <img
+                src={tour.images?.[0] || ""}
+                alt={tour.name}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  display: "block"
+                }}
+              />
+            </div>
+
+            {/* CONTENT */}
+            <div style={{ padding: "16px" }}>
+              {/* TITLE */}
+              <div
+                style={{
+                  color: isSelected ? GOLD : "#fff",
+                  fontSize: "18px",
+                  fontWeight: 700,
+                  marginBottom: "6px"
+                }}
+              >
+                {tour.name}
+              </div>
+
+              {/* DETAIL */}
+              <div
+                style={{
+                  color: TEXT_MUTED,
+                  fontSize: "14px",
+                  marginBottom: "12px",
+                  lineHeight: 1.5
+                }}
+              >
+                {tour.detail}
+              </div>
+
+              {/* BADGES */}
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "8px",
+                  marginBottom: "14px"
+                }}
+              >
+                <span style={badgeStyle}>⭐ 4.9</span>
+                <span style={badgeStyle}>🚘 Private Driver</span>
+                <span style={badgeStyle}>🕒 Flexible</span>
+              </div>
+
+              {/* PRICE + SELECTED */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center"
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      color: TEXT_MUTED,
+                      fontSize: "12px"
+                    }}
+                  >
+                    From
+                  </div>
+
+                  <div
+                    style={{
+                      color: GOLD,
+                      fontSize: "22px",
+                      fontWeight: 700
+                    }}
+                  >
+                    {tour.price.split(" / ")[0]}
+                  </div>
+                </div>
+
+                {isSelected && (
+                  <div
+                    style={{
+                      background: GOLD,
+                      color: BG_DARK,
+                      padding: "6px 12px",
+                      borderRadius: "999px",
+                      fontSize: "12px",
+                      fontWeight: 700
+                    }}
+                  >
+                    SELECTED
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    {/* DATE + PASSENGERS */}
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "16px",
+        marginTop: "20px"
+      }}
+    >
+      <div style={{ flex: "1 1 200px" }}>
+        <label style={labelStyle}>Tour Date</label>
+        <input
+          type="date"
+          value={tourDate}
+          onChange={(e) => setTourDate(e.target.value)}
+          style={inputStyle}
+        />
+      </div>
+
+      <div style={{ flex: "1 1 200px" }}>
+        <label style={labelStyle}>Passengers</label>
+        <input
+          type="number"
+          min="1"
+          max="7"
+          value={tourPassengers}
+          onChange={(e) => setTourPassengers(e.target.value)}
+          style={inputStyle}
+        />
+      </div>
+    </div>
+
+    <button type="submit" disabled={loading} style={actionButtonStyle}>
+      {loading ? "Processing..." : "Book Selected Private Tour"}
+    </button>
+  </div>
+)}
               </button>
 
               <button
@@ -393,10 +691,12 @@ export default function BookingForm() {
 
                 <button type="submit" disabled={loading} style={actionButtonStyle}>
                   {loading ? "Processing..." : "Confirm Ride Reservation"}
+                  
                 </button>
               </div>
+              
             )}
-
+            
             {/* 2. MENÜ: TOURS & PACKAGES PANELİ */}
             {mainTab === "tours" && (
               <div style={{ width: "100%" }}>
@@ -404,12 +704,14 @@ export default function BookingForm() {
                 <p style={{ color: TEXT_MUTED, fontSize: "clamp(12px, 1.1vw, 14px)", marginBottom: "20px" }}>Select a curated luxury experience below</p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "12px", width: "100%" }}>
-                  {landTours.map((tour) => (
+                 {landTours.map((tour) => (
                     <div
                       key={tour.id}
                       onClick={() => setSelectedTour(tour.id)}
                       style={tourCardStyle(selectedTour === tour.id)}
+                      
                     >
+                      
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", gap: "12px" }}>
                         <div style={{ overflow: "hidden" }}>
                           <div style={{ color: selectedTour === tour.id ? GOLD : "#FFF", fontSize: "clamp(14px, 1.2vw, 16px)", fontWeight: 600, lineHeight: 1.3 }}>
@@ -438,7 +740,7 @@ export default function BookingForm() {
                           window.open(tour.mapsUrl, "_blank", "noopener,noreferrer");
                         }}
                         style={mapsButtonStyle}
-                      >
+                      > 
                         🗺️ View Route on Google Maps ↗
                       </button>
 
@@ -610,21 +912,40 @@ const menuButtonStyle = (isActive: boolean): React.CSSProperties => ({
   width: "100%",
   boxSizing: "border-box"
 });
-
-const tourCardStyle = (isSelected: boolean): React.CSSProperties => ({
+const labelStyle: React.CSSProperties = {
+  display: "block",
+  color: TEXT_MUTED,
+  fontSize: "12px",
+  textTransform: "uppercase",
+  marginBottom: "6px",
+  letterSpacing: "0.05em"
+};
+const tourCardStyle = (
+  isSelected: boolean
+): React.CSSProperties => ({
   border: `1px solid ${isSelected ? GOLD : BORDER}`,
-  background: isSelected ? "rgba(197, 168, 128, 0.03)" : "transparent",
-  borderRadius: "12px",
-  padding: "16px",
+  background: isSelected
+    ? "rgba(197,168,128,.04)"
+    : SURFACE,
+  borderRadius: "18px",
+  overflow: "hidden",
   cursor: "pointer",
-  display: "flex",
-  flexDirection: "column", 
-  gap: "12px",
-  transition: "all 0.2s",
+  transition: "all .25s ease",
   width: "100%",
-  boxSizing: "border-box"
+  boxSizing: "border-box",
+  boxShadow: isSelected
+    ? "0 10px 30px rgba(197,168,128,.08)"
+    : "none"
 });
-
+const badgeStyle: React.CSSProperties = {
+  background: "rgba(255,255,255,0.04)",
+  border: `1px solid ${BORDER}`,
+  padding: "6px 10px",
+  borderRadius: "999px",
+  fontSize: "12px",
+  color: "#ddd",
+  whiteSpace: "nowrap"
+};
 const mapsButtonStyle: React.CSSProperties = {
   alignSelf: "flex-start",
   background: "rgba(255, 255, 255, 0.03)",
