@@ -1,34 +1,62 @@
 export default function ColofonPage() {
   return (
-    // 'pt-40' (veya 140px) Header'ın arkada kalmamasını sağlar.
-    // 'layout.tsx' içerisindeki Header fixed olduğu için bu boşluk şart.
-    <div style={{ minHeight: "100vh", backgroundColor: "#0A0A0A", color: "#FAFAFA"}}>
-      <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-        <h1 style={{ fontSize: "32px", marginBottom: "30px", color: "#D4AF37" }}>Colofon</h1>
-        <p>Informatie conform de wettelijke verplichtingen (Duitsland/Nederland):</p>
-        <h3 style={{ marginTop: "20px" }}>Bedrijfsnaam</h3>
-        <p>Luxury Taxi Limo</p>
-        <h3 style={{ marginTop: "20px" }}>Contact</h3>
-        <p>Email: info@luxurytaxilimo.com</p>
-        <p>Tel: +31 6 55508424</p>
-        <h1>Colofon (Bedrijfsgegevens)</h1>
-      <p>Informatie conform de wettelijke verplichtingen:</p>
-      
-      <h3>Bedrijfsnaam</h3>
-      <p>Taxibedrijf Uyar</p>
-      
-      <h3>Adres</h3>
-      <p>Oost-Dorsch 125</p>
-      <p>1504BN Zaandam</p>
-      <p>Nederland</p>
-      
-      <h3>Contact</h3>
-      <p>E-mail: info@luxurytaxilimo.com</p>
-      <p>Telefoon: +31 6 38352022</p>
-      
-      <h3>Registratie</h3>
-      <p>KVK-nummer (KvK): 34156787</p>
-      <p>BTW-identificatienummer: 8438293</p>
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "#0B0F14",
+        color: "#FAFAFA",
+        paddingTop: "140px",
+        paddingBottom: "60px",
+      }}
+    >
+      <div style={{ maxWidth: "850px", margin: "0 auto", padding: "0 20px" }}>
+        
+        <h1 style={{ fontSize: "34px", marginBottom: "10px", color: "#C6A26B" }}>
+          Colofon / Impressum
+        </h1>
+
+        <p style={{ opacity: 0.7, marginBottom: "30px" }}>
+          Wettelijke bedrijfsinformatie (NL / EU compliance)
+        </p>
+
+        <h3 style={{ marginTop: "20px", color: "#C6A26B" }}>
+          Bedrijfsnaam
+        </h3>
+        <p>Luxury Taxi Limo / Taxibedrijf Uyar</p>
+
+        <h3 style={{ marginTop: "25px", color: "#C6A26B" }}>
+          Adres
+        </h3>
+        <p>Oost-Dorsch 125</p>
+        <p>1504 BN Zaandam</p>
+        <p>Nederland</p>
+
+        <h3 style={{ marginTop: "25px", color: "#C6A26B" }}>
+          Contact
+        </h3>
+        <p>E-mail: info@luxurytaxilimo.nl</p>
+        <p>Telefoon: +31 6 38352022</p>
+
+        <h3 style={{ marginTop: "25px", color: "#C6A26B" }}>
+          Registratiegegevens
+        </h3>
+        <p>KvK-nummer: 34156787</p>
+        <p>BTW-nummer: 8438293</p>
+
+        <h3 style={{ marginTop: "25px", color: "#C6A26B" }}>
+          Verantwoordelijkheid inhoud
+        </h3>
+        <p>
+          De inhoud van deze website is met zorg samengesteld. Ondanks dit
+          kunnen er geen rechten worden ontleend aan eventuele onjuistheden.
+        </p>
+
+        <h3 style={{ marginTop: "25px", color: "#C6A26B" }}>
+          Toepasselijk recht
+        </h3>
+        <p>
+          Op deze website is Nederlands recht van toepassing.
+        </p>
       </div>
     </div>
   );
