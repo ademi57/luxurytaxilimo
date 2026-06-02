@@ -5,9 +5,11 @@
   --foreground: #171717;
 }
 
-/* Scrollbar zıplamasını engellemek için eklendi */
+/* Scrollbar zıplamasını engellemek için */
 html {
+   font-size: 24px;
   overflow-y: scroll;
+  font-size: 16px; /* Baz boyutu belirledik */
 }
 
 @theme inline {
@@ -27,7 +29,9 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-  /* Next.js'in standartları ile çakışmaması için min-h-screen'i 
-     layout.tsx'te tanımladığımız için buradaki body stilini koruyoruz */
+  /* Arial'ı sildik, Geist fontunun aktif olması için sans-serif kullandık */
+  font-family: var(--font-sans), sans-serif; 
+  font-size: 1.125rem; /* 16px -> 18px yaptık (Daha büyük ve modern) */
+  line-height: 1.7;    /* Satır arasını açtık, okumayı kolaylaştırdık */
+  font-weight: 400;
 }
