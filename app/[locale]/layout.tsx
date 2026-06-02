@@ -6,6 +6,7 @@ import "../globals.css";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import { default as WhatsAppButton } from "../components/WhatsAppButton";
+import CookieBanner from "../components/CookieBanner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -53,7 +54,9 @@ export default async function RootLayout({
           
           {/* WhatsApp Butonu eklendi */}
           <WhatsAppButton />
+          <CookieBanner />
         </NextIntlClientProvider>
+        
       </body>
     </html>
   );
