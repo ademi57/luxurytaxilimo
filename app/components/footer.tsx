@@ -1,14 +1,19 @@
-"use client"; // İkonlar ve etkileşimler için gerekli
+"use client";
 
+import { useLocale } from 'next-intl';
+import { Link } from '../../i18n/routing';
 import { 
   FaInstagram, 
   FaFacebook, 
   FaLinkedin, 
   FaPhone, 
-  FaEnvelope 
+  FaEnvelope,
+  FaGoogle 
 } from "react-icons/fa";
 
 export default function Footer() {
+  const locale = useLocale();
+
   return (
     <footer style={{ background: "#F7F3E9", borderTop: "1px solid rgba(212,175,55,0.2)", padding: "64px 40px 40px" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
@@ -37,8 +42,8 @@ export default function Footer() {
           {/* Legal */}
           <div>
             <h4 style={{ fontSize: "10px", letterSpacing: "0.3em", fontWeight: 700, textTransform: "uppercase", color: "#D4AF37", marginBottom: "20px" }}>Legal</h4>
-            <a href="/colofon" style={{ display: "block", fontSize: "12px", color: "#2D2926", marginBottom: "10px", letterSpacing: "0.05em", textDecoration: "none" }}>Colofon</a>
-            <a href="/privacy" style={{ display: "block", fontSize: "12px", color: "#2D2926", marginBottom: "10px", letterSpacing: "0.05em", textDecoration: "none" }}>Privacyverklaring</a>
+            <Link href="/colofon" style={{ display: "block", fontSize: "12px", color: "#2D2926", marginBottom: "10px", letterSpacing: "0.05em", textDecoration: "none" }}>Colofon</Link>
+            <Link href="/privacy" style={{ display: "block", fontSize: "12px", color: "#2D2926", marginBottom: "10px", letterSpacing: "0.05em", textDecoration: "none" }}>Privacyverklaring</Link>
           </div>
 
           {/* Contact */}
@@ -46,7 +51,7 @@ export default function Footer() {
             <h4 style={{ fontSize: "10px", letterSpacing: "0.3em", fontWeight: 700, textTransform: "uppercase", color: "#D4AF37", marginBottom: "20px" }}>Contact</h4>
             <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
               {[
-                { icon: FaPhone, text: "+31655508424" },
+                { icon: FaPhone, text: "+31638352022" },
                 { icon: FaEnvelope, text: "info@luxurytaxilimo.com" },
               ].map((c, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -55,14 +60,18 @@ export default function Footer() {
                 </div>
               ))}
               <div style={{ display: "flex", gap: "16px", marginTop: "8px" }}>
-              {[FaInstagram, FaFacebook, FaLinkedin].map((Icon, i) => (
-                <Icon 
-                  key={i} 
-                  style={{ color: "#A07820", fontSize: "18px", cursor: "pointer", transition: "color 0.3s" }}
-                  onMouseEnter={e => (e.currentTarget as SVGElement).style.color = "#D4AF37"}
-                  onMouseLeave={e => (e.currentTarget as SVGElement).style.color = "#A07820"}
-                />
-              ))}
+                
+                <a href="https://www.instagram.com/luxurytaxilimo" target="_blank" rel="noopener noreferrer">
+                  <FaInstagram style={{ color: "#A07820", fontSize: "18px", cursor: "pointer", transition: "color 0.3s" }} onMouseEnter={e => e.currentTarget.style.color = "#D4AF37"} onMouseLeave={e => e.currentTarget.style.color = "#A07820"} />
+                </a>
+
+                <a href="https://share.google/SAqkTcGVyvkVpbky4" target="_blank" rel="noopener noreferrer">
+                  <FaGoogle style={{ color: "#A07820", fontSize: "18px", cursor: "pointer", transition: "color 0.3s" }} onMouseEnter={e => e.currentTarget.style.color = "#D4AF37"} onMouseLeave={e => e.currentTarget.style.color = "#A07820"} />
+                </a>
+
+                <FaFacebook style={{ color: "#A07820", fontSize: "18px", cursor: "pointer", transition: "color 0.3s" }} onMouseEnter={e => e.currentTarget.style.color = "#D4AF37"} onMouseLeave={e => e.currentTarget.style.color = "#A07820"} />
+                <FaLinkedin style={{ color: "#A07820", fontSize: "18px", cursor: "pointer", transition: "color 0.3s" }} onMouseEnter={e => e.currentTarget.style.color = "#D4AF37"} onMouseLeave={e => e.currentTarget.style.color = "#A07820"} />
+                
               </div>
             </div>
           </div>
@@ -72,8 +81,25 @@ export default function Footer() {
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px" }}>
           <p style={{ fontSize: "10px", letterSpacing: "0.3em", color: "#5A544D", textTransform: "uppercase" }}>
-            © 2026 Luxury Taxi Limo · All Rights Reserved
+            © 2026 Luxury Taxi Limo · All Rights Reserved 
           </p>
+          <a 
+           href="https://www.aonsi.de" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           style={{ 
+             fontSize: "10px", 
+             letterSpacing: "0.2em", 
+             color: "#D4AF37", 
+             textTransform: "uppercase",
+             textDecoration: "none",
+             cursor: "pointer"
+           }}
+           onMouseOver={(e) => e.currentTarget.style.opacity = "0.7"}
+           onMouseOut={(e) => e.currentTarget.style.opacity = "1"}
+          >
+            Design by Aonsi Digital
+          </a>
           <p style={{ fontSize: "10px", letterSpacing: "0.2em", color: "#D4AF37", textTransform: "uppercase" }}>
             Champagne & Gold Edition
           </p>

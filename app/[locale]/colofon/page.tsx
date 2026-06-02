@@ -2,7 +2,7 @@ export default function ColofonPage() {
   return (
     // 'pt-40' (veya 140px) Header'ın arkada kalmamasını sağlar.
     // 'layout.tsx' içerisindeki Header fixed olduğu için bu boşluk şart.
-    <div style={{ minHeight: "100vh", backgroundColor: "#0A0A0A", color: "#FAFAFA", padding: "40px 20px 100px" }}>
+    <div style={{ minHeight: "100vh", backgroundColor: "#0A0A0A", color: "#FAFAFA"}}>
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
         <h1 style={{ fontSize: "32px", marginBottom: "30px", color: "#D4AF37" }}>Colofon</h1>
         <p>Informatie conform de wettelijke verplichtingen (Duitsland/Nederland):</p>

@@ -17,6 +17,7 @@ import {
   FaClock,
   FaWifi,
 } from "react-icons/fa";
+import { use } from "react";
 
 /* ─── FadeIn Bileşeni İçin Tip Tanımlaması ─── */
 interface FadeInProps {
@@ -97,7 +98,8 @@ function Counter({ target, suffix = "" }: CounterProps) {
 
   return <span ref={ref}>{count.toLocaleString()}{suffix}</span>;
 }
-export default function IndexPage() {
+export default function IndexPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = use(params);
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -106,7 +108,7 @@ export default function IndexPage() {
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  const heroBackgrounds = ["/car-1.jpg", "/car-2.jpg", "/car-3.jpg", "/car-4.jpg"];
+  const heroBackgrounds = ["/car-1.jpg", "/car-2.jpg", "/car-3.jpg", "/car-4.jpg", "/car-5.png", "/car-6.png"];
 
   useEffect(() => {
     const iv = setInterval(() => setCurrentBgIndex(p => (p + 1) % heroBackgrounds.length), 6000);
@@ -138,6 +140,8 @@ export default function IndexPage() {
     { name: "BMW 7 Series", tag: "Executive Suite", image: "/car-2.jpg", features: ["Rear Theatre", "Ambient Lighting", "Massage Seats"] },
     { name: "Audi A8 L", tag: "Prestige Saloon", image: "/car-3.jpg", features: ["Adaptive Air Ride", "Night Vision", "Panoramic Roof"] },
     { name: "Range Rover LWB", tag: "Luxury SUV", image: "/car-4.jpg", features: ["Executive Rear", "Terrain Response", "Refrigerator"] },
+    { name: "Mercedes-Benz V-Class", tag: "Luxury Minivan", image: "/car-5.png", features: ["Business Class Comfort", "Ambient Lighting", "Panoramic Roof"] },
+    { name: "Bentley Flying Spur", tag: "Luxury VIP", image: "/car-6.png", features: ["Business Class VIP Comfort", "Ambient Lighting", "Soft ambient "] },
   ];
 
   const testimonials = [
@@ -426,7 +430,7 @@ export default function IndexPage() {
       <main style={{ background: "var(--black)", color: "var(--white)", overflowX: "hidden" }}>
 
         {/* ═══════════════════════ HERO ═══════════════════════ */}
-        <section ref={heroRef} style={{ position: "relative", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+        <section ref={heroRef} style={{ position: "relative", height: "calc(100vh - 110px)", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
           
           {/* Background images */}
           <motion.div style={{ position: "absolute", inset: 0, y: heroY }}>
@@ -457,7 +461,7 @@ export default function IndexPage() {
           />
 
           {/* Hero content */}
-          <motion.div style={{ opacity: heroOpacity, position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px", maxWidth: "1100px" }}>
+          <motion.div style={{ opacity: heroOpacity, position: "relative", zIndex: 1, textAlign: "center", padding: "0 24px", maxWidth: "1100px" }}>
             
             <motion.p
               initial={{ opacity: 0, letterSpacing: "0.8em" }}
@@ -504,7 +508,7 @@ export default function IndexPage() {
               transition={{ duration: 0.8, delay: 1.1 }}
               style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}
             >
-              <Link href="/booking" className="btn-gold">
+              <Link href={`/${locale}/booking`} className="btn-gold">
                 <span>Reserve Your Chauffeur</span>
                 <FaArrowRight size={10} />
               </Link>
@@ -733,11 +737,11 @@ export default function IndexPage() {
                 </p>
 
                 <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-                  <Link href="/booking" className="btn-gold">
+                  <Link href={`/${locale}/booking`} className="btn-gold">
                     <span>Open Reservation Portal</span>
                     <FaArrowRight size={10} />
                   </Link>
-                  <a href="tel:+31655508424" className="btn-outline">
+                  <a href="tel:+31638352022" className="btn-outline">
                     <FaPhone size={10} />
                     Call Direct
                   </a>

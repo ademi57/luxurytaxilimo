@@ -1,10 +1,10 @@
 {
   "Nav": {
-    "services": "Services",
-    "vehicles": "Vehicles",
-    "testimonials": "Testimonials",
-    "booking": "Booking",
+    "services": "Diensten",
+    "vehicles": "Voertuigen",
+    "testimonials": "Ervaringen",
+    "booking": "Reserveren",
     "colofon": "Colofon",
-    "privacy": "Privacy"
+    "privacy": "Privacyverklaring"
   }
 }

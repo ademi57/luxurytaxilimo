@@ -33,9 +33,9 @@ export default function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) 
             : "-translate-y-full opacity-0 pointer-events-none"
         }`}
         style={{
-          /* Buzlu cam: yarı saydam koyu altın-siyah gradyan + güçlü blur */
+          isolation: "isolate",
           background:
-            "linear-gradient(160deg, rgba(22,18,12,0.82) 0%, rgba(14,12,8,0.92) 100%)",
+            "linear-gradient(160deg, rgba(22,18,12,0.98) 0%, rgba(14,12,8,0.99) 100%)",
           backdropFilter: "blur(28px) saturate(1.4)",
           WebkitBackdropFilter: "blur(28px) saturate(1.4)",
           borderBottom: "1px solid rgba(212,175,55,0.18)",
@@ -69,8 +69,6 @@ export default function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) 
               "radial-gradient(circle at bottom right, rgba(212,175,55,0.06) 0%, transparent 70%)",
           }}
         />
-
-       
 
         {/* ── İçerik ── */}
         <div className="relative flex flex-col items-center w-full px-8 py-14">
@@ -124,10 +122,10 @@ export default function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) 
 
           {/* Telefon */}
           <a
-            href="tel:+31201234567"
+            href="tel:+31638352022"
             className="mt-8 text-[11px] tracking-[0.2em] text-white/25 hover:text-[#D4AF37] transition-colors duration-200"
           >
-            +31 20 123 4567
+            +31 6 38 35 20 22
           </a>
         </div>
       </div>

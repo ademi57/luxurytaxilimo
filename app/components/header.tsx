@@ -22,10 +22,9 @@ export default function Header() {
 
   return (
     <nav 
-      className="fixed top-0 left-0 w-full z-[9999] backdrop-blur-md border-0 outline-none shadow-none ring-0 transition-colors duration-500"
-      style={{ backgroundColor: "rgba(247, 243, 233, 0.90)", color: "#2D2926" }}
+      className="fixed top-0 left-0 w-full z-[9999] backdrop-blur-md transition-colors duration-500 pr-[calc(100vw-100%)]" style={{ backgroundColor: "rgba(247, 243, 233, 0.90)", color: "#2D2926" }}
     >
-      <div className="max-w-7xl mx-auto px-5 md:px-6 flex justify-between items-center py-3 md:py-4">
+      <div className="max-w-7xl mx-auto h-[110px] px-5 md:px-10 flex justify-between items-center">
         <Link href={`/${locale}`} className="flex items-center gap-5 group">
           <div className="relative w-16 h-16 md:w-24 md:h-24 overflow-hidden rounded-full border-2 border-[#D4AF37]/40 bg-zinc-900 shadow-lg shadow-[#D4AF37]/10">
             <Image src="/logo.jpg" alt="Luxury Taxi Limo Logo" fill sizes="(max-width: 768px) 64px, 96px" className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" priority />
