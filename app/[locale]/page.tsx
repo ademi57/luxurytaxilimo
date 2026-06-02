@@ -535,24 +535,33 @@ export default function IndexPage({ params }: { params: Promise<{ locale: string
         </section>
 
         {/* ═══════════════════════ STATS ═══════════════════════ */}
-        <section style={{ background: "var(--black-2)", borderTop: "1px solid rgba(212,175,55,0.1)", borderBottom: "1px solid rgba(212,175,55,0.1)" }}>
-          <div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}>
-            {stats.map((stat, i) => (
-              <FadeIn key={i} delay={i * 0.1}>
-                <div className="stat-card">
-                  <div className="font-display" style={{ fontSize: "48px", fontWeight: 300, lineHeight: 1 }}>
-                    <span className="text-gold-gradient">
-                      <Counter target={stat.value} suffix={stat.suffix} />
-                    </span>
-                  </div>
-                  <p style={{ fontSize: "10px", letterSpacing: "0.25em", color: "rgba(250,250,250,0.4)", textTransform: "uppercase", marginTop: "8px" }}>
-                    {stat.label}
-                  </p>
-                </div>
-              </FadeIn>
-            ))}
+<section style={{ background: "var(--black-2)", borderTop: "1px solid rgba(212,175,55,0.1)", borderBottom: "1px solid rgba(212,175,55,0.1)" }}>
+  <div 
+    style={{ maxWidth: "1100px", margin: "0 auto" }} 
+    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 py-16 px-6"
+  >
+    {stats.map((stat, i) => (
+      <FadeIn key={i} delay={i * 0.1}>
+        <div className="stat-card flex flex-col items-center text-center">
+          <div className="font-display" style={{ fontSize: "48px", fontWeight: 300, lineHeight: 1 }}>
+            <span className="text-gold-gradient">
+              <Counter target={stat.value} suffix={stat.suffix} />
+            </span>
           </div>
-        </section>
+          <p style={{ 
+            fontSize: "10px", 
+            letterSpacing: "0.25em", 
+            color: "rgba(250,250,250,0.4)", 
+            textTransform: "uppercase", 
+            marginTop: "8px" 
+          }}>
+            {stat.label}
+          </p>
+        </div>
+      </FadeIn>
+    ))}
+  </div>
+</section>
 
         {/* ═══════════════════════ SERVICES ═══════════════════════ */}
         <section id="services" style={{ padding: "120px 0", background: "var(--black)", position: "relative" }}>

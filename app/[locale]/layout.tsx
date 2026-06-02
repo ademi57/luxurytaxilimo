@@ -5,6 +5,7 @@ import { getMessages } from 'next-intl/server';
 import "../globals.css";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import { default as WhatsAppButton } from "../components/WhatsAppButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,16 +40,19 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} dir={direction}>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-[#F7F3E9] text-[#2D2926]`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-[#F7F3E9] text-[#2D2926] relative`}>
         {/* NextIntlClientProvider içinde locale ve messages kullanımı */}
         <NextIntlClientProvider key={locale} locale={locale} messages={messages}>
           <Header />
           
-          <main className="pt-[120px] md:pt-[140px] flex-grow">
+          <main className="pt-[110px] flex-grow">
             {children}
           </main>
           
           <Footer />
+          
+          {/* WhatsApp Butonu eklendi */}
+          <WhatsAppButton />
         </NextIntlClientProvider>
       </body>
     </html>
