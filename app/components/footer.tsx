@@ -52,7 +52,7 @@ export default function Footer() {
             <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
               {[
                 { icon: FaPhone, text: "+31638352022" },
-                { icon: FaEnvelope, text: "info@luxurytaxilimo.com" },
+                { icon: FaEnvelope, text: "info@luxurytaxilimo.nl" },
               ].map((c, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                   <c.icon style={{ color: "#D4AF37", fontSize: "15px" }} />
