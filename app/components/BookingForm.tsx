@@ -48,6 +48,10 @@ export default function BookingForm() {
   const vehicles = [
     { id: "s-class", name: "Mercedes-Benz S-Class", desc: "Max 3 Pax · 2 Bags" },
     { id: "v-class", name: "Mercedes-Benz V-Class", desc: "Max 7 Pax · 7 Bags" },
+    { id: "e-class", name: "Mercedes-Benz E-Class", desc: "Max 5 Pax · 5 Bags" },
+    { id: "sprinter", name: "Mercedes-Benz Sprinter", desc: " 18 seater - Max 7 Pax · 7 Bags" },
+    { id: "BMW", name: "BMW 7 Series", desc: "Max 5 Pax · 5 Bags" },
+    { id: "A8L", name: "Audi A8 L ", desc: "Max 7 Pax · 7 Bags" },
   ];
 
   // Kara Turları Listesi (Görseller lüks temayla uyumlu, yüksek kaliteli seçildi)
@@ -55,17 +59,18 @@ export default function BookingForm() {
     { 
       id: "tour1", 
       name: "Tour 1 — Windmills & Villages", 
-      detail: "Zaanse Schans + Cheese Factory + Volendam", 
+      detail: "Zaanse Schans + Cheese Factory + Volendam + 2-hour waiting time", 
       price: "€350 / 5 Hours",
       mapsUrl: "https://www.google.com/maps/dir/Amsterdam/Zaanse+Schans/Volendam/",
       images: ["/Zaanse Schans.jpg",
+              "/zaanse.jpg",
               "/CheeseFactory.jpg"]
     },
     { 
       id: "tour2", 
       name: "Tour 2 — Giethoorn", 
-      detail: "Venice of the North Experience", 
-      price: "€600 / 6 Hours",
+      detail: "Venice of the North Experience + 2-hour waiting time", 
+      price: "€475 / 6 Hours",
       mapsUrl: "https://www.google.com/maps/dir/Amsterdam/Giethoorn/",
       images: [
         "/giethoorn.jpg",
@@ -80,6 +85,17 @@ export default function BookingForm() {
       mapsUrl: "https://www.google.com/maps/search/?api=1&query=Amsterdam+Centraal",
       images: [
         "/amsterdam.jpg",
+        "/amsterdamcity.jpg"
+      ]
+    },
+    { 
+      id: "tour4", 
+      name: "Keukenhof Tulip Tour", 
+      detail: "keukenhof + Lisse + 2-hour waiting time ", 
+      price: "€295 / Sedan or €350 / Bus",
+      mapsUrl: "https://www.google.com/maps/dir/?api=1&origin=Amsterdam+Centraal&destination=Keukenhof+Lisse&travelmode=transit",
+      images: [
+        "/keukenhof.jpg",
         "/amsterdam2.jpg"
       ]
     },
@@ -132,7 +148,7 @@ export default function BookingForm() {
       ]
     }
   ];
-
+  const [phone, setPhone] = useState("");
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!fullName || !email) {
@@ -302,6 +318,8 @@ export default function BookingForm() {
               <div style={{ flex: "1 1 200px" }}>
                 <label style={{ display: "block", color: TEXT_MUTED, fontSize: "clamp(11px, 1vw, 13px)", textTransform: "uppercase", marginBottom: "6px" }}>Email Address</label>
                 <input type="email" placeholder="john@example.com" value={email} onChange={(e) => setEmail(e.target.value)} style={inputStyle} required />
+                <label style={{ display: "block", color: TEXT_MUTED, fontSize: "clamp(11px, 1vw, 13px)", textTransform: "uppercase", marginBottom: "6px" }}>Phone Number</label>
+                <input type="telephone" placeholder="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} style={inputStyle} required />
               </div>
             </div>
           </div>

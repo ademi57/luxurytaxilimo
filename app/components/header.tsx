@@ -21,6 +21,7 @@ export default function Header() {
   ], [t, locale]);
 
   return (
+    <>
     <nav 
       className="fixed top-0 left-0 w-full z-[9999] backdrop-blur-md transition-colors duration-500 pr-[calc(100vw-100%)]" style={{ backgroundColor: "rgba(247, 243, 233, 0.90)", color: "#2D2926" }}
     >
@@ -39,8 +40,8 @@ export default function Header() {
           </div>
         </Link>
 
-        <div className="flex items-center gap-6">
-          <div className="hidden lg:flex gap-10 text-[12px] uppercase tracking-[0.25em] font-bold text-[#2D2926] items-center">
+        <div className="flex items-center gap-6 flex-1 justify-end">
+          <div className="hidden lg:flex gap-10 text-[12px] uppercase tracking-[0.25em] font-bold text-[#2D2926] items-center ml-auto">
             {navLinks.map((link) => (
               <Link key={link.name} href={link.href} className="hover:text-[#D4AF37] transition-all duration-300">
                 {link.name}
@@ -60,11 +61,15 @@ export default function Header() {
         </div>
       </div>
 
-      <MobileMenu 
+      
+    </nav>
+    <div style={{ position: "relative", zIndex: 10001 }}>
+    <MobileMenu 
         isOpen={isMenuOpen} 
         onClose={() => setIsMenuOpen(false)} 
         links={navLinks} 
       />
-    </nav>
+      </div>
+      </>
   );
 }

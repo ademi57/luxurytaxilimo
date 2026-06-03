@@ -7,6 +7,7 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import { default as WhatsAppButton } from "../components/WhatsAppButton";
 import CookieBanner from "../components/CookieBanner";
+import StructuredData from "../components/StructuredData";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,9 +19,55 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Luxury Taxi Limo | VIP Chauffeur Service",
-  description: "Premium and luxury chauffeur service for your comfort.",
+export const metadata = {
+  metadataBase: new URL("https://luxurytaxilimo.com"),
+
+  title: {
+    default: "Luxury Taxi Limo | Private Chauffeur & Tours",
+    template: "%s | Luxury Taxi Limo",
+  },
+
+  description:
+    "Premium private chauffeur services, airport transfers, luxury tours and helicopter experiences across Europe.",
+
+  keywords: [
+    "luxury taxi",
+    "private chauffeur Amsterdam",
+    "airport transfer Netherlands",
+    "VIP transport Europe",
+    "helicopter tour Amsterdam",
+    "luxury tours Netherlands",
+  ],
+
+  openGraph: {
+    title: "Luxury Taxi Limo",
+    description:
+      "Luxury chauffeur, airport transfers, tours and helicopter flights in Europe.",
+    url: "https://luxurytaxilimo.com.com",
+    siteName: "Luxury Taxi Limo",
+    images: [
+      {
+        url: "/og-image.jpg", // public/ içine koyacağız
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Luxury Taxi Limo",
+    description:
+      "Private chauffeur & luxury travel experiences in Europe.",
+    images: ["/og-image.jpg"],
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default async function RootLayout({ 
@@ -42,6 +89,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={direction}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-[#F7F3E9] text-[#2D2926] relative`}>
+        <StructuredData />
         {/* NextIntlClientProvider içinde locale ve messages kullanımı */}
         <NextIntlClientProvider key={locale} locale={locale} messages={messages}>
           <Header />

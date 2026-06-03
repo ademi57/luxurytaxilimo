@@ -108,7 +108,7 @@ export default function IndexPage({ params }: { params: Promise<{ locale: string
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  const heroBackgrounds = ["/car-1.jpg", "/car-2.jpg", "/car-3.jpg", "/car-4.jpg", "/car-5.png", "/car-6.png", "/car7-.png"];
+  const heroBackgrounds = ["/car-1.jpg", "/car8-.png", "/car-2.jpg", "/car-3.jpg", "/car-4.jpg", "/car-5.png", "/car-6.png", "/car7-.png"];
 
   useEffect(() => {
     const iv = setInterval(() => setCurrentBgIndex(p => (p + 1) % heroBackgrounds.length), 6000);
@@ -137,11 +137,11 @@ export default function IndexPage({ params }: { params: Promise<{ locale: string
 
   const vehicles = [
     { name: "Mercedes S-Class", tag: "Flagship Sedan", image: "/car-1.jpg", features: ["Nappa Leather", "Burmester Sound", "Privacy Glass"] },
-    { name: "Mercedes Sprinter", tag: "Luxury VIP Group Drive", image: "/car-7.png", features: ["Spacious Group Configuration", "Family-Friendly Interior Comfort", "Seamless Group Travel Experience"] },
-    { name: "BMW 7 Series", tag: "Executive Suite", image: "/car-2.jpg", features: ["Rear Theatre", "Ambient Lighting", "Massage Seats"] },
-    { name: "Audi A8 L", tag: "Prestige Saloon", image: "/car-3.jpg", features: ["Adaptive Air Ride", "Night Vision", "Panoramic Roof"] },
-    { name: "Range Rover LWB", tag: "Luxury SUV", image: "/car-4.jpg", features: ["Executive Rear", "Terrain Response", "Refrigerator"] },
+    { name: "Mercedes E-Class", tag: "E Class Luxury VIP", image: "/car-8.png", features: ["Business Class VIP Comfort", "Advanced Ambient Lighting", "Executive Seating"]},
+    { name: "Mercedes Sprinter", tag: "Luxury VIP Group Drive", image: "/car-7.png", features: ["Spacious Group Configuration", "Family-Friendly Interior Comfort", "Seamless Group Travel Experience"] }, 
     { name: "Mercedes-Benz V-Class", tag: "Luxury Minivan", image: "/car-5.png", features: ["Business Class Comfort", "Ambient Lighting", "Panoramic Roof"] },
+    { name: "BMW 7 Series", tag: "Executive Suite", image: "/car-2.jpg", features: ["Rear Theatre", "Ambient Lighting", "Massage Seats"] },
+    { name: "Audi A8 L", tag: "Prestige Saloon", image: "/car-4.jpg", features: ["Adaptive Air Ride", "Night Vision", "Panoramic Roof"] },
     { name: "Bentley Flying Spur", tag: "Luxury VIP", image: "/car-6.png", features: ["Business Class VIP Comfort", "Ambient Lighting", "Soft ambient "] },
   ];
 

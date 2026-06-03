@@ -28,7 +28,6 @@ export default function BookingPage() {
                 fill
                 className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
               />
-            
             </div>
             <div className="flex flex-col">
               <span className="text-xl md:text-2xl font-black uppercase tracking-tighter text-white leading-none">
@@ -51,29 +50,36 @@ export default function BookingPage() {
       </nav>
 
       {/* --- FORM ALANI --- */}
-      <div className="max-w-3xl mx-auto px-5 md:px-6 mt-10">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-black tracking-tighter uppercase mb-4">
+      {/* max-w-3xl yerine max-w-7xl kullanarak ve px ayarlarıyla ekranı tam kaplamasını sağladık */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 relative">
+        
+        {/* Tasarım Dokunuşu: Formun arkasına hafif lüks bir gold glow efekti */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] bg-[#D4AF37]/5 blur-[120px] pointer-events-none rounded-full" />
+
+        <div className="text-center mb-16 relative z-10">
+          <h1 className="text-4xl md:text-6xl font-black tracking-tighter uppercase mb-4">
             VIP <span className="text-[#D4AF37]">Reservation</span> Portal
           </h1>
-          <p className="text-xs md:text-sm text-zinc-500 uppercase tracking-widest max-w-xl mx-auto leading-relaxed">
+          <p className="text-xs md:text-sm text-zinc-500 uppercase tracking-widest max-w-2xl mx-auto leading-relaxed">
             Please fill out the form below to secure your luxury chauffeur service. Our dispatch team will confirm your itinerary shortly.
           </p>
+          
+          {/* Tasarım Dokunuşu: Başlığın altına şık, ince gold bir çizgi */}
+          <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/60 to-transparent mx-auto mt-6" />
         </div>
 
-        {/* Formu sarmalayan lüks panel kutusu */}
-        <div className="bg-black border border-zinc-800 p-6 md:p-12 rounded-[40px] shadow-2xl relative shadow-[#D4AF37]/5">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/50 to-transparent" />
+        {/* Lüks kutu (panel) kaldırıldı, form doğrudan geniş alana yayıldı */}
+        <div className="w-full relative z-10 dynamic-form-container">
           <BookingForm />
         </div>
       </div>
 
-      <div className="mt-20">
+      <div className="mt-28">
         <TouristSlider />
       </div>
 
       {/* FOOTER NOTU */}
-      <div className="text-center mt-16">
+      <div className="text-center mt-20">
         <p className="text-[9px] tracking-[0.4em] uppercase text-zinc-650">
           Secure 256-Bit SSL Encrypted Booking System
         </p>
