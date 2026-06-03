@@ -96,9 +96,29 @@ export default function BookingForm() {
       mapsUrl: "https://www.google.com/maps/dir/?api=1&origin=Amsterdam+Centraal&destination=Keukenhof+Lisse&travelmode=transit",
       images: [
         "/keukenhof.jpg",
-        "/amsterdam2.jpg"
+        "/keukenhofff.jpg"
       ]
     },
+    {
+     id: "tour5",
+     name: "Amsterdam Cruise Airport Transfer",
+     detail: "Amsterdam Cruise Port / Airport Transfer",
+      price: "€95",
+      mapsUrl: "https://www.google.com/maps/dir/?api=1&origin=Amsterdam+Cruise+Port&destination=Amsterdam+Airport+Schiphol&travelmode=driving",
+      images: [
+       "/curise.png" 
+      ]
+    },
+    {
+  id: "tour6",
+  name: "Amsterdam to Rotterdam Cruise Transfer",
+  detail: "Amsterdam City/Airport to Rotterdam Cruise Port",
+  price: "€225 / Sedan",
+  mapsUrl: "https://www.google.com/maps/dir/?api=1&origin=Amsterdam+Centraal&destination=Cruise+Port+Rotterdam&travelmode=driving",
+  images: [
+    "/cruiseairport.png"
+  ]
+},
     { 
       id: "transfer", 
       name: "Transfer — Airport Private Transfer", 
