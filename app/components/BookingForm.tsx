@@ -51,7 +51,6 @@ export default function BookingForm() {
     { id: "e-class", name: "Mercedes-Benz E-Class", desc: "Max 5 Pax · 5 Bags" },
     { id: "sprinter", name: "Mercedes-Benz Sprinter", desc: " 18 seater - Max 7 Pax · 7 Bags" },
     { id: "BMW", name: "BMW 7 Series", desc: "Max 5 Pax · 5 Bags" },
-    { id: "A8L", name: "Audi A8 L ", desc: "Max 7 Pax · 7 Bags" },
   ];
 
   // Kara Turları Listesi (Görseller lüks temayla uyumlu, yüksek kaliteli seçildi)

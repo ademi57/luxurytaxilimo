@@ -141,8 +141,7 @@ export default function IndexPage({ params }: { params: Promise<{ locale: string
     { name: "Mercedes Sprinter", tag: "Luxury VIP Group Drive", image: "/car-7.png", features: ["Spacious Group Configuration", "Family-Friendly Interior Comfort", "Seamless Group Travel Experience"] }, 
     { name: "Mercedes-Benz V-Class", tag: "Luxury Minivan", image: "/car-5.png", features: ["Business Class Comfort", "Ambient Lighting", "Panoramic Roof"] },
     { name: "BMW 7 Series", tag: "Executive Suite", image: "/car-2.jpg", features: ["Rear Theatre", "Ambient Lighting", "Massage Seats"] },
-    { name: "Audi A8 L", tag: "Prestige Saloon", image: "/car-4.jpg", features: ["Adaptive Air Ride", "Night Vision", "Panoramic Roof"] },
-    { name: "Bentley Flying Spur", tag: "Luxury VIP", image: "/car-6.png", features: ["Business Class VIP Comfort", "Ambient Lighting", "Soft ambient "] },
+    { name: "Tesla Model S ", tag: "Luxury Electric", image: "/car-9.png", features: ["Adaptive Air Ride", "Night Vision", "Panoramic Roof"] },
   ];
 
   const testimonials = [
