@@ -81,18 +81,19 @@ const allTours: Tour[] = [
       images: ["/curise.png"],
   },
   {
-    id: "windmills-villages",
-    name: "Windmills & Villages",
-    price: " From €350 / 5 Hours",
+    id: "Amsterdam → Rotterdam Cruise Transfer",
+    name: "Amsterdam → Rotterdam Cruise Transfer",
+    price: " From €225 / Sedan",
     category: "land",
-   detail: "Zaanse Schans + Cheese Factory + Volendam + 2-hour waiting time",
-    images: ["/Zaanse Schans.jpg", "/zaanse.jpg", "/CheeseFactory.jpg"],
-     mapsUrl: "https://www.google.com/maps/dir/Amsterdam/Zaanse+Schans/Volendam/",
+   detail: "Amsterdam City / Airport to Rotterdam Cruise Port",
+   mapsUrl:
+        "https://www.google.com/maps/dir/?api=1&origin=Amsterdam+Centraal&destination=Cruise+Port+Rotterdam&travelmode=driving",
+      images: ["/cruiseairport.png"],
   },
   {
     id: "grand-holland",
     name: "Grand Holland Private Helicopter Tour",
-    price: "From €1,200",
+    price: "From €800",
     category: "helicopter",
     detail: "Exclusive sky tour covering flower fields, coastlines, and major historical landmarks.",
     images: [

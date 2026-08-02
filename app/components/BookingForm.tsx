@@ -2,19 +2,21 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { sendBookingEmail } from "./actions";
 
+
 /* ============================================================
    DESIGN TOKENS — Quiet Luxury (Chauffeur Noir)
    ============================================================ */
-const GOLD = "#C6A26B";
-const GOLD_SOFT = "rgba(198, 162, 107, 0.12)";
-const GOLD_BRIGHT = "#E4C48F";
-const BG_DARK = "#0A0A0B";
-const SURFACE = "#141416";
-const SURFACE_RAISED = "#1B1B1D";
-const BORDER = "#26262A";
-const BORDER_SOFT = "#1F1F22";
-const TEXT_MUTED = "#8C8C92";
-const TEXT_FAINT = "#5C5C61";
+const GOLD = "#8A6D3B";           // koyulaştı, açık zeminde okunur olsun diye
+const GOLD_SOFT = "rgba(138, 109, 59, 0.12)";
+const GOLD_BRIGHT = "#6E5629";
+const BG_DARK = "#F7EEDD";        // açık altın sarısı zemin
+const SURFACE = "#FBF4E6";        // biraz daha açık ton, panel zemini
+const SURFACE_RAISED = "#FFFFFF"; // input/kart zemini — beyaza yakın
+const BORDER = "#E4D3AE";
+const BORDER_SOFT = "#EDE0C4";
+const TEXT_MAIN = "#2B2317";
+const TEXT_MUTED = "#6B5D42";
+const TEXT_FAINT = "#9C8B65";
 const SERIF = "'Cormorant Garamond', Georgia, 'Times New Roman', serif";
 const SANS = "'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif";
 
@@ -709,7 +711,7 @@ const eyebrow: React.CSSProperties = {
 };
 
 const heroTitle: React.CSSProperties = {
-  color: "#FFF",
+  color: "#2B2317",   // #FFF yerine koyu ton
   fontSize: "clamp(28px, 3vw, 38px)",
   fontFamily: SERIF,
   fontWeight: 600,
@@ -741,7 +743,7 @@ const cardGrid: React.CSSProperties = {
 
 const tabButtonStyle = (active: boolean): React.CSSProperties => ({
   background: active ? GOLD_SOFT : "transparent",
-  color: active ? GOLD_BRIGHT : "#E5E5E7",
+  color: active ? GOLD_BRIGHT : "#2B2317",   // "#E5E5E7" yerine koyu ton
   border: `1px solid ${active ? GOLD : BORDER_SOFT}`,
   padding: "14px 16px",
   borderRadius: "12px",
@@ -762,7 +764,7 @@ const inputStyle: React.CSSProperties = {
   border: `1px solid ${BORDER}`,
   borderRadius: "9px",
   padding: "12px 14px",
-  color: "#FFFFFF",
+  color: "#2B2317",   // "#FFFFFF" yerine koyu ton
   fontSize: "14px",
   outline: "none",
   fontFamily: SANS,
@@ -799,7 +801,7 @@ const selectRow = (active: boolean): React.CSSProperties => ({
 });
 
 const rowTitle = (active: boolean): React.CSSProperties => ({
-  color: active ? GOLD_BRIGHT : "#FFF",
+  color: active ? GOLD_BRIGHT : "#2B2317",   // "#FFF" yerine koyu ton
   fontSize: "14.5px",
   fontWeight: 600,
   lineHeight: 1.35,
