@@ -18,8 +18,9 @@ import {
   FaWifi,
 } from "react-icons/fa";
 import { use } from "react";
-
-/* ─── FadeIn Bileşeni İçin Tip Tanımlaması ─── */
+import Script from 'next/script';
+import { useParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 interface FadeInProps {
   children: React.ReactNode;
   delay?: number;
@@ -27,7 +28,80 @@ interface FadeInProps {
   className?: string;
 }
 
-/* ─── Reusable fade-in-view wrapper ─── */
+
+// ─── TYPES ────────────────────────────────────────────────
+interface Tour {
+  id: string;
+  name: string;
+  price: string;
+  detail: string;
+  category: "land" | "helicopter";
+  images: string[];
+  mapsUrl?: string;
+}
+
+// ─── ALL TOURS DATA ───────────────────────────────────────
+const allTours: Tour[] = [
+  {
+    id: "giethoorn",
+    name: "Giethoorn & Windmills Tour",
+    price: " From €475 / 6 Hours",
+    category: "land",
+    detail: "Venice of the North Experience + 2-hour waiting time,Explore the Venice of the North and traditional Dutch windmills in full private luxury.",
+    images: ["/giethoorn.jpg", "/giethoorn2.jpg"],
+    mapsUrl: "https://www.google.com/maps/dir/Amsterdam/Giethoorn/",
+  },
+  {
+    id: "keukenhof",
+    name: "Keukenhof Tulip Experience",
+    price: " From €295 / Sedan · €350 / Bus",
+    category: "land",
+    detail: "Keukenhof + Lisse + 2-hour waiting time, Immerse yourself in millions of blooming flowers with private door-to-door transfer.",
+    images: ["/keukenhof.jpg", "/keukenhofff.jpg"],
+    mapsUrl:
+        "https://www.google.com/maps/dir/?api=1&origin=Amsterdam+Centraal&destination=Keukenhof+Lisse&travelmode=transit",
+  },
+  {
+    id: "zaanse-schans",
+    name: "Zaanse Schans & Volendam",
+    price: "From €280",
+    category: "land",
+    detail: "Discover historic wooden windmills, cheese factories, and traditional fishing villages.",
+    images: ["/Zaanse Schans.jpg", "/zaanse.jpg", "/CheeseFactory.jpg"],
+    mapsUrl: "https://www.google.com/maps/dir/Amsterdam/Zaanse+Schans/Volendam/",
+  },
+  {
+    id: "Amsterdam Cruise / Airport Transfer",
+    name: "Amsterdam Cruise / Airport Transfer",
+    price: " From €95",
+    category: "land",
+    detail: "Amsterdam Cruise Port ↔ Airport Transfer",
+  mapsUrl:
+        "https://www.google.com/maps/dir/?api=1&origin=Amsterdam+Cruise+Port&destination=Amsterdam+Airport+Schiphol&travelmode=driving",
+      images: ["/curise.png"],
+  },
+  {
+    id: "windmills-villages",
+    name: "Windmills & Villages",
+    price: " From €350 / 5 Hours",
+    category: "land",
+   detail: "Zaanse Schans + Cheese Factory + Volendam + 2-hour waiting time",
+    images: ["/Zaanse Schans.jpg", "/zaanse.jpg", "/CheeseFactory.jpg"],
+     mapsUrl: "https://www.google.com/maps/dir/Amsterdam/Zaanse+Schans/Volendam/",
+  },
+  {
+    id: "grand-holland",
+    name: "Grand Holland Private Helicopter Tour",
+    price: "From €1,200",
+    category: "helicopter",
+    detail: "Exclusive sky tour covering flower fields, coastlines, and major historical landmarks.",
+    images: [
+      "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80"
+    ],
+    mapsUrl: "https://maps.google.com"
+  }
+
+];
 function FadeIn({ children, delay = 0, direction = "up", className = "" }: FadeInProps) {
   // useRef'e bir HTML div elementi tutacağını belirttik
   const ref = useRef<HTMLDivElement>(null);
@@ -107,9 +181,9 @@ export default function IndexPage({ params }: { params: Promise<{ locale: string
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
+  const pathname = usePathname();
   const heroBackgrounds = ["/car-1.jpg", "/car8-.png", "/car-2.jpg", "/car-3.jpg", "/car-4.jpg", "/car-5.png", "/car-6.png", "/car7-.png"];
-
+    const currentLocale = pathname.split("/")[1] || "en";
   useEffect(() => {
     const iv = setInterval(() => setCurrentBgIndex(p => (p + 1) % heroBackgrounds.length), 6000);
     return () => clearInterval(iv);
@@ -119,6 +193,19 @@ export default function IndexPage({ params }: { params: Promise<{ locale: string
     const handler = () => setIsScrolled(window.scrollY > 60);
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
+  }, []);
+
+  useEffect(() => {
+    const scriptId = 'elfsight-script';
+    let script = document.getElementById(scriptId) as HTMLScriptElement | null;
+
+    if (!script) {
+      script = document.createElement('script');
+      script.id = scriptId;
+      script.src = 'https://elfsightcdn.com/platform.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
   }, []);
 
   const navLinks = [
@@ -134,7 +221,7 @@ export default function IndexPage({ params }: { params: Promise<{ locale: string
     { name: "Special Events", icon: FaCalendarAlt, desc: "Weddings, galas, red carpet arrivals — arrive in unforgettable style." },
     { name: "City Tours", icon: FaMapMarkerAlt, desc: "Curated city experiences in pure luxury. Your personal driver, your agenda." },
   ];
-
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const vehicles = [
     { name: "Mercedes S-Class", tag: "Flagship Sedan", image: "/car-1.jpg", features: ["Nappa Leather", "Burmester Sound", "Privacy Glass"] },
     { name: "Mercedes E-Class", tag: "E Class Luxury VIP", image: "/car-8.png", features: ["Business Class VIP Comfort", "Advanced Ambient Lighting", "Executive Seating"]},
@@ -145,9 +232,9 @@ export default function IndexPage({ params }: { params: Promise<{ locale: string
   ];
 
   const testimonials = [
-    { name: "Sarah J.", role: "CEO, Tech Solutions", stars: 5, quote: "Every journey feels like flying first class. The attention to detail and professionalism is unmatched anywhere in the city." },
-    { name: "Michael C.", role: "Entrepreneur", stars: 5, quote: "I've used executive car services worldwide. This is the gold standard. The fleet is immaculate, the drivers are elite." },
-    { name: "David L.", role: "Frequent Traveler", stars: 5, quote: "Punctual to the minute, every time. After three years of using them for my airport runs, they've never let me down once." },
+      { name: "Sarah J.", role: "CEO, Tech Solutions", stars: 5, quote: "Every journey feels like flying first class. The attention to detail and professionalism is unmatched anywhere in the city." },
+      { name: "Michael C.", role: "Entrepreneur", stars: 5, quote: "I've used executive car services worldwide. This is the gold standard. The fleet is immaculate, the drivers are elite." },
+      { name: "David L.", role: "Frequent Traveler", stars: 5, quote: "Punctual to the minute, every time. After three years of using them for my airport runs, they've never let me down once." },
   ];
 
   const stats = [
@@ -156,7 +243,8 @@ export default function IndexPage({ params }: { params: Promise<{ locale: string
     { value: 98, suffix: "%", label: "Client Satisfaction" },
     { value: 24, suffix: "/7", label: "Available Hours" },
   ];
-
+const [tourTab, setTourTab] = useState<"tours" | "helicopter">("tours");
+const [activeGallery, setActiveGallery] = useState<{ tour: any; index: number } | null>(null);
   return (
     <>
       <style>{`
@@ -563,101 +651,553 @@ export default function IndexPage({ params }: { params: Promise<{ locale: string
   </div>
 </section>
 
-        {/* ═══════════════════════ SERVICES ═══════════════════════ */}
-        <section id="services" style={{ padding: "120px 0", background: "var(--black)", position: "relative" }}>
-          
-          {/* Bg pattern */}
-          <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(rgba(212,175,55,0.03) 1px, transparent 1px)", backgroundSize: "48px 48px", pointerEvents: "none" }} />
+{/* ═══════════════════════ SERVICES & EXPERIENCES ═══════════════════════ */}
 
-          <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 40px" }}>
-            <FadeIn>
-              <div style={{ textAlign: "center", marginBottom: "80px" }}>
-                <p className="section-label" style={{ marginBottom: "16px" }}>What We Offer</p>
-                <h2 className="font-display" style={{ fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 300, color: "#000000", lineHeight: 1.1 }}>
-                  Flawless Service,{" "}
-                  <span style={{ fontStyle: "italic" }} className="text-gold-gradient">Every Time</span>
-                </h2>
-                <GoldDivider />
-                <p style={{ color: "rgba(250,250,250,0.4)", fontSize: "13px", letterSpacing: "0.12em", maxWidth: "480px", margin: "0 auto" }}>
-                  Tailored luxury transportation across every occasion
+<section id="services" style={{ padding: "120px 0", backgroundColor: "#0A0A0A", position: "relative" }}>
+  
+  {/* Izgara Arka Plan Deseni */}
+  <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(rgba(212,175,55,0.05) 1px, transparent 1px)", backgroundSize: "48px 48px", pointerEvents: "none" }} />
+
+  <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 40px", position: "relative", zIndex: 1 }}>
+    
+    {/* 👑 ÜST BAŞLIK VE AÇIKLAMA BÖLÜMÜ */}
+    <FadeIn>
+      <div style={{ textAlign: "center", marginBottom: "64px" }}>
+        <p className="section-label" style={{ marginBottom: "16px", color: "#D4AF37", fontSize: "12px", letterSpacing: "0.2em", fontWeight: 700 }}>
+          WHAT WE OFFER
+        </p>
+        <h2 className="font-display" style={{ fontSize: "clamp(36px, 5vw, 56px)", fontWeight: 300, color: "#FFFFFF", lineHeight: 1.1 }}>
+          Flawless Service,{" "}
+          <span style={{ fontStyle: "italic", color: "#D4AF37" }}>Every Time</span>
+        </h2>
+        <GoldDivider />
+        <p style={{ color: "rgba(255, 255, 255, 0.6)", fontSize: "13px", letterSpacing: "0.15em", maxWidth: "520px", margin: "16px auto 0", textTransform: "uppercase" }}>
+          Tailored luxury transportation across every occasion
+        </p>
+      </div>
+    </FadeIn>
+
+    {/* 💼 4 ANA SERVİS KARTI GRIDI */}
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "24px", marginBottom: "80px" }}>
+      {[
+        { title: "Airport Transfer", desc: "First-class airport logistics, tracked flight arrivals, and meet-and-greet service.", icon: "✈️" },
+        { title: "Corporate Travel", desc: "Discreet executive transport. NDA-compliant chauffeurs, privacy glass, secure routing.", icon: "💼" },
+        { title: "Special Events", desc: "Weddings, galas, red carpet arrivals — arrive in unforgettable style.", icon: "🍷" },
+        { title: "City Tours", desc: "Curated city experiences in pure luxury. Your personal driver, your agenda.", icon: "🏛️" }
+      ].map((srv, idx) => (
+        <FadeIn key={idx} delay={idx * 0.1}>
+          <div 
+            style={{ 
+              backgroundColor: "#141414", 
+              border: "1px solid rgba(212, 175, 55, 0.25)",
+              borderRadius: "12px",
+              padding: "36px 28px",
+              height: "100%",
+              transition: "all 0.3s ease",
+              boxShadow: "0 8px 24px rgba(0,0,0,0.4)"
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = "translateY(-6px)";
+              e.currentTarget.style.borderColor = "#D4AF37";
+              e.currentTarget.style.backgroundColor = "#1A1A1A";
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.borderColor = "rgba(212, 175, 55, 0.25)";
+              e.currentTarget.style.backgroundColor = "#141414";
+            }}
+          >
+            <div style={{ fontSize: "32px", marginBottom: "20px" }}>{srv.icon}</div>
+            <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#FFFFFF", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "12px" }}>
+              {srv.title}
+            </h3>
+            <p style={{ fontSize: "14px", color: "rgba(255, 255, 255, 0.75)", lineHeight: 1.6, margin: 0 }}>
+              {srv.desc}
+            </p>
+          </div>
+        </FadeIn>
+      ))}
+    </div>
+
+    {/* 🖼️ TÜM TURLAR GRIDI */}
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "32px" }}>
+      {allTours.map((tour: Tour, i: number) => (
+        <FadeIn key={tour.id || i} delay={i * 0.1}>
+          <div 
+            style={{ 
+              backgroundColor: "#141414", 
+              borderRadius: "12px", 
+              overflow: "hidden", 
+              border: "1px solid rgba(212, 175, 55, 0.25)",
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              transition: "transform 0.3s ease, border-color 0.3s ease",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.5)"
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = "translateY(-6px)";
+              e.currentTarget.style.borderColor = "#D4AF37";
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.borderColor = "rgba(212, 175, 55, 0.25)";
+            }}
+          >
+            {/* 📸 TIKLANABİLİR GÖRSEL ALANI */}
+            <div 
+              onClick={() => setActiveGallery({ tour, index: 0 })}
+              style={{ 
+                position: "relative", 
+                height: "230px", 
+                overflow: "hidden", 
+                cursor: "pointer" 
+              }}
+            >
+              <img 
+                src={tour.images[0]} 
+                alt={tour.name} 
+                style={{ 
+                  width: "100%", 
+                  height: "100%", 
+                  objectFit: "cover", 
+                  display: "block",
+                  transition: "transform 0.5s ease"
+                }} 
+                onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.05)"}
+                onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}
+              />
+              
+              {/* Fiyat Etiketi */}
+              <div style={{ 
+                position: "absolute", 
+                top: "14px", 
+                left: "14px", 
+                backgroundColor: "#0A0A0A", 
+                border: "1px solid #D4AF37", 
+                padding: "6px 14px",
+                borderRadius: "4px",
+                zIndex: 2
+              }}>
+                <span style={{ fontSize: "12px", color: "#D4AF37", fontWeight: 700 }}>{tour.price}</span>
+              </div>
+
+              {/* Resim Sayısı Rozeti */}
+              {tour.images && tour.images.length > 0 && (
+                <div style={{ 
+                  position: "absolute", 
+                  bottom: "14px", 
+                  right: "14px", 
+                  backgroundColor: "rgba(0,0,0,0.85)", 
+                  padding: "6px 12px",
+                  borderRadius: "20px",
+                  fontSize: "11px",
+                  color: "#FFFFFF",
+                  letterSpacing: "0.1em",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  border: "1px solid rgba(212, 175, 55, 0.4)",
+                  zIndex: 2
+                }}>
+                  📷 <span>{tour.images.length} PHOTOS</span>
+                </div>
+              )}
+            </div>
+
+            {/* İçerik */}
+            <div style={{ padding: "28px 24px", flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div>
+                <h3 style={{ fontSize: "18px", fontWeight: 600, color: "#FFFFFF", marginBottom: "12px", letterSpacing: "0.03em" }}>
+                  {tour.name}
+                </h3>
+                <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.7)", lineHeight: 1.6, marginBottom: "20px" }}>
+                  {tour.detail}
                 </p>
               </div>
-            </FadeIn>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "2px" }}>
-              {services.map((service, i) => (
-                <FadeIn key={i} delay={i * 0.12} direction="up">
-                  <div className="service-card" style={{ height: "100%" }}>
-                    <div style={{ marginBottom: "28px", position: "relative", display: "inline-block" }}>
-                      <div style={{ position: "absolute", inset: -8, background: "rgba(212,175,55,0.06)", borderRadius: "50%" }} />
-                      <service.icon style={{ fontSize: "28px", color: "#D4AF37", position: "relative" }} />
-                    </div>
-                    <h3 style={{ fontSize: "14px", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#FAFAFA", marginBottom: "16px" }}>
-                      {service.name}
-                    </h3>
-                    <p style={{ fontSize: "13px", color: "rgba(250,250,250,0.45)", lineHeight: 1.8, letterSpacing: "0.02em" }}>
-                      {service.desc}
-                    </p>
-                  </div>
-                </FadeIn>
-              ))}
-            </div>
-          </div>
-        </section>
+              <div style={{ display: "flex", gap: "12px", marginTop: "16px", paddingTop: "16px", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+                {/* 🔍 GALERİ AÇMA BUTONU */}
+                <button
+                  type="button"
+                  onClick={() => setActiveGallery({ tour, index: 0 })}
+                  style={{
+                    flex: 1,
+                    padding: "12px",
+                    background: "transparent",
+                    border: "1px solid rgba(212, 175, 55, 0.5)",
+                    color: "#D4AF37",
+                    borderRadius: "4px",
+                    fontSize: "11px",
+                    fontWeight: 700,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    cursor: "pointer"
+                  }}
+                >
+                  Explore Gallery
+                </button>
 
-        {/* ═══════════════════════ VEHICLES ═══════════════════════ */}
-        <section id="vehicles" style={{ padding: "120px 0", background: "var(--black-2)" }}>
-          <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 40px" }}>
-            <FadeIn>
-              <div style={{ textAlign: "center", marginBottom: "80px" }}>
-                <p className="section-label" style={{ marginBottom: "16px" }}>The Fleet</p>
-                <h2 className="font-display" style={{ fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 300, color: "#FAFAFA", lineHeight: 1.1 }}>
-                  <span style={{ fontStyle: "italic" }} className="text-gold-gradient">Elite</span>{" "}
-                  Machines, Perfected
-                </h2>
-                <GoldDivider />
+                <Link
+href={`/${currentLocale}/booking`}
+  style={{
+    flex: 1,
+    padding: "12px",
+    backgroundColor: "#D4AF37",
+    color: "#000000",
+    borderRadius: "4px",
+    fontSize: "11px",
+    fontWeight: 700,
+    letterSpacing: "0.1em",
+    textTransform: "uppercase",
+    textAlign: "center",
+    textDecoration: "none"
+  }}
+>
+  Book Now
+</Link>
               </div>
-            </FadeIn>
-
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "24px" }}>
-              {vehicles.map((v, i) => (
-                <FadeIn key={i} delay={i * 0.1}>
-                  <div className="vehicle-card">
-                    <div style={{ position: "relative", overflow: "hidden" }}>
-                      <img src={v.image} alt={v.name} />
-                      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,8,8,0.9) 0%, transparent 60%)" }} />
-                      <div style={{ position: "absolute", top: "16px", right: "16px", background: "rgba(212,175,55,0.15)", border: "1px solid rgba(212,175,55,0.3)", padding: "4px 12px" }}>
-                        <span style={{ fontSize: "9px", letterSpacing: "0.25em", color: "#D4AF37", fontWeight: 700, textTransform: "uppercase" }}>{v.tag}</span>
-                      </div>
-                    </div>
-                    <div style={{ padding: "28px 24px" }}>
-                      <h3 style={{ fontSize: "16px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#FAFAFA", marginBottom: "16px" }}>
-                        {v.name}
-                      </h3>
-                      <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "8px" }}>
-                        {v.features.map(f => (
-                          <li key={f} style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "11px", color: "rgba(250,250,250,0.5)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-                            <div style={{ width: "4px", height: "4px", background: "#D4AF37", flexShrink: 0 }} />
-                            {f}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </FadeIn>
-              ))}
             </div>
 
-            <FadeIn delay={0.3}>
-              <div style={{ textAlign: "center", marginTop: "56px" }}>
-                <Link href="/booking" className="btn-outline">
-                  View Full Fleet & Pricing
-                </Link>
-              </div>
-            </FadeIn>
           </div>
-        </section>
+        </FadeIn>
+      ))}
+    </div>
 
+  </div>
+
+  {/* 🖼️ GALERİ LIGHTBOX MODAL (Resimleri Oklar ile Değiştirme) */}
+  {activeGallery && activeGallery.tour && activeGallery.tour.images && (
+    <div 
+      onClick={() => setActiveGallery(null)}
+      style={{
+        position: "fixed",
+        inset: 0,
+        backgroundColor: "rgba(0, 0, 0, 0.95)",
+        zIndex: 99999,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: "30px 20px",
+        backdropFilter: "blur(10px)"
+      }}
+    >
+      {/* Modal Üst Başlık */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: "1000px", width: "100%", margin: "0 auto" }}>
+        <div>
+          <span style={{ color: "#D4AF37", fontSize: "12px", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase" }}>
+            {activeGallery.tour.price}
+          </span>
+          <h3 style={{ color: "#FFFFFF", fontSize: "22px", fontWeight: 400, margin: "4px 0 0" }}>
+            {activeGallery.tour.name}
+          </h3>
+        </div>
+        <button 
+          type="button"
+          onClick={() => setActiveGallery(null)}
+          style={{ background: "none", border: "none", color: "#D4AF37", fontSize: "36px", cursor: "pointer" }}
+        >
+          ✕
+        </button>
+      </div>
+
+      {/* Modal Resim ve Oklar */}
+      <div 
+        onClick={(e) => e.stopPropagation()}
+        style={{ position: "relative", maxWidth: "900px", width: "100%", margin: "auto", display: "flex", alignItems: "center", justifyContent: "center" }}
+      >
+        {/* Sol Ok */}
+        {activeGallery.tour.images.length > 1 && (
+          <button 
+            type="button"
+            onClick={() => setActiveGallery(g => g ? { ...g, index: (g.index - 1 + g.tour.images.length) % g.tour.images.length } : null)}
+            style={{ 
+              position: "absolute", 
+              left: "-20px", 
+              backgroundColor: "rgba(0,0,0,0.8)", 
+              border: "1px solid #D4AF37", 
+              color: "#D4AF37", 
+              width: "48px", 
+              height: "48px", 
+              borderRadius: "50%", 
+              cursor: "pointer", 
+              fontSize: "24px", 
+              zIndex: 10,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            ‹
+          </button>
+        )}
+
+        {/* Büyük Resim */}
+        <img 
+          src={activeGallery.tour.images[activeGallery.index]} 
+          alt={activeGallery.tour.name} 
+          style={{ maxWidth: "100%", maxHeight: "65vh", objectFit: "contain", borderRadius: "8px", border: "1px solid rgba(212,175,55,0.3)" }} 
+        />
+
+        {/* Sağ Ok */}
+        {activeGallery.tour.images.length > 1 && (
+          <button 
+            type="button"
+            onClick={() => setActiveGallery(g => g ? { ...g, index: (g.index + 1) % g.tour.images.length } : null)}
+            style={{ 
+              position: "absolute", 
+              right: "-20px", 
+              backgroundColor: "rgba(0,0,0,0.8)", 
+              border: "1px solid #D4AF37", 
+              color: "#D4AF37", 
+              width: "48px", 
+              height: "48px", 
+              borderRadius: "50%", 
+              cursor: "pointer", 
+              fontSize: "24px", 
+              zIndex: 10,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            ›
+          </button>
+        )}
+      </div>
+
+      {/* Alt Nokta İndikatörleri ve Detay */}
+      <div onClick={(e) => e.stopPropagation()} style={{ textAlign: "center", maxWidth: "600px", margin: "0 auto" }}>
+        {activeGallery.tour.images.length > 1 && (
+          <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginBottom: "16px" }}>
+            {activeGallery.tour.images.map((_: string, idx: number) => (
+              <div 
+                key={idx} 
+                onClick={() => setActiveGallery(g => g ? { ...g, index: idx } : null)}
+                style={{
+                  width: idx === activeGallery.index ? "24px" : "8px",
+                  height: "8px",
+                  borderRadius: "4px",
+                  backgroundColor: idx === activeGallery.index ? "#D4AF37" : "rgba(255,255,255,0.2)",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease"
+                }}
+              />
+            ))}
+          </div>
+        )}
+
+        {activeGallery.tour.mapsUrl && (
+          <button
+            type="button"
+            onClick={() => window.open(activeGallery.tour.mapsUrl, "_blank", "noopener,noreferrer")}
+            style={{
+              background: "transparent",
+              border: "1px solid #D4AF37",
+              color: "#D4AF37",
+              padding: "10px 24px",
+              borderRadius: "4px",
+              fontSize: "11px",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              cursor: "pointer"
+            }}
+          >
+            🗺️ View Route on Google Maps
+          </button>
+        )}
+      </div>
+
+    </div>
+  )}
+</section>
+      {/* ═══════════════════════ VEHICLES ═══════════════════════ */}
+<section id="vehicles" style={{ padding: "120px 0", background: "var(--black-2)" }}>
+  <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 40px" }}>
+    <FadeIn>
+      <div style={{ textAlign: "center", marginBottom: "80px" }}>
+        <p className="section-label" style={{ marginBottom: "16px" }}>The Fleet</p>
+        <h2 className="font-display" style={{ fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 300, color: "#FAFAFA", lineHeight: 1.1 }}>
+          <span style={{ fontStyle: "italic" }} className="text-gold-gradient">Elite</span>{" "}
+          Machines, Perfected
+        </h2>
+        <GoldDivider />
+      </div>
+    </FadeIn>
+
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
+      {vehicles.map((v, i) => {
+        const nameUpper = v.name ? v.name.toUpperCase() : "";
+        let pax = "3";
+        let luggage = "2";
+
+        if (nameUpper.includes("SPRINTER")) {
+          pax = "12-16";
+          luggage = "12+";
+        } else if (nameUpper.includes("V-CLASS") || nameUpper.includes("VAN") || nameUpper.includes("MINIVAN")) {
+          pax = "6";
+          luggage = "6";
+        } else if (nameUpper.includes("S-CLASS") || nameUpper.includes("E-CLASS")) {
+          pax = "3";
+          luggage = "2";
+        }
+
+        return (
+          <FadeIn key={i} delay={i * 0.1}>
+            <div className="vehicle-card" style={{ borderRadius: "8px", overflow: "hidden", display: "flex", flexDirection: "column", height: "100%" }}>
+              
+              {/* 📸 MODAL AÇAN TIKLANABİLİR GÖRSEL */}
+              <div 
+                onClick={() => setSelectedImage(v.image)}
+                title="Görseli büyütmek için tıklayın"
+                style={{ position: "relative", width: "100%", height: "220px", overflow: "hidden", cursor: "pointer" }}
+              >
+                <img 
+                  src={v.image} 
+                  alt={v.name} 
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.3s ease" }} 
+                  onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.05)"}
+                  onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}
+                />
+
+                {/* Tag / Etiket Kutusu */}
+                <div style={{ 
+                  position: "absolute", 
+                  top: "12px", 
+                  right: "12px", 
+                  background: "rgba(18, 18, 18, 0.85)", 
+                  border: "1px solid #D4AF37", 
+                  padding: "4px 10px",
+                  backdropFilter: "blur(4px)",
+                  zIndex: 2
+                }}>
+                  <span style={{ fontSize: "9px", letterSpacing: "0.2em", color: "#D4AF37", fontWeight: 700, textTransform: "uppercase" }}>
+                    {v.tag}
+                  </span>
+                </div>
+              </div>
+              
+              {/* 📝 AÇIK RENK KART GÖVDESİ */}
+              <div style={{ padding: "24px 20px", background: "#F5F2EB", flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                <div>
+                  <h3 style={{ fontSize: "16px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#1A1A1A", marginBottom: "14px" }}>
+                    {v.name}
+                  </h3>
+
+                  {/* 👥 ARACA ÖZEL KİŞİ VE BAGAJ SAYILARI */}
+                  <div style={{ 
+                    display: "flex", 
+                    gap: "16px", 
+                    marginBottom: "16px", 
+                    paddingBottom: "12px", 
+                    borderBottom: "1px solid rgba(0,0,0,0.08)" 
+                  }}>
+                    {/* Kişi Sayısı */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "11px", color: "#1A1A1A", fontWeight: 700 }}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C59B27" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                      </svg>
+                      <span>{pax} PASSENGERS</span>
+                    </div>
+
+                    {/* Bagaj Sayısı */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "11px", color: "#1A1A1A", fontWeight: 700 }}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C59B27" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                      </svg>
+                      <span>{luggage} LUGGAGE</span>
+                    </div>
+                  </div>
+                  
+                  {/* Özellik Listesi */}
+                  <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "8px", padding: 0, margin: 0 }}>
+                    {v.features.map(f => (
+                      <li key={f} style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "10px", color: "#555555", letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 600 }}>
+                        <div style={{ width: "4px", height: "4px", background: "#C59B27", flexShrink: 0 }} />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </FadeIn>
+        );
+      })}
+    </div>
+
+    <FadeIn delay={0.3}>
+      <div style={{ textAlign: "center", marginTop: "56px" }}>
+        <Link href="/booking" className="btn-outline">
+          View Full Fleet & Pricing
+        </Link>
+      </div>
+    </FadeIn>
+  </div>
+
+  {/* 🖼️ RESİM GALERİSİ MODAL/LIGHTBOX */}
+  {selectedImage && (
+    <div 
+      onClick={() => setSelectedImage(null)}
+      style={{
+        position: "fixed",
+        inset: 0,
+        backgroundColor: "rgba(0, 0, 0, 0.9)",
+        zIndex: 9999,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px",
+        backdropFilter: "blur(5px)"
+      }}
+    >
+      <div 
+        onClick={(e) => e.stopPropagation()} 
+        style={{ position: "relative", maxWidth: "90vw", maxHeight: "90vh" }}
+      >
+        {/* ❌ KAPATMA DÜĞMESİ (Sağ Üst Köşe) */}
+        <button
+          onClick={() => setSelectedImage(null)}
+          style={{
+            position: "absolute",
+            top: "-40px",
+            right: "0",
+            background: "none",
+            border: "none",
+            color: "#D4AF37",
+            fontSize: "32px",
+            fontWeight: 300,
+            cursor: "pointer",
+            lineHeight: 1,
+            display: "flex",
+            alignItems: "center",
+            gap: "8px"
+          }}
+        >
+          <span style={{ fontSize: "12px", letterSpacing: "0.2em", color: "#FAFAFA", textTransform: "uppercase" }}>Close</span>
+          ✕
+        </button>
+
+        {/* Modal Görseli */}
+        <img 
+          src={selectedImage} 
+          alt="Enlarged view" 
+          style={{
+            maxWidth: "100%",
+            maxHeight: "80vh",
+            objectFit: "contain",
+            borderRadius: "4px",
+            border: "1px solid rgba(212, 175, 55, 0.3)",
+            boxShadow: "0 20px 50px rgba(0,0,0,0.8)"
+          }}
+        />
+      </div>
+    </div>
+  )}
+</section>
         {/* ═══════════════════════ PROMISE STRIP ═══════════════════════ */}
         <section style={{ padding: "80px 40px", background: "#0A0A0A", borderTop: "1px solid rgba(212,175,55,0.08)", borderBottom: "1px solid rgba(212,175,55,0.08)" }}>
           <div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "48px", textAlign: "center" }}>
@@ -683,42 +1223,28 @@ export default function IndexPage({ params }: { params: Promise<{ locale: string
         </section>
 
         {/* ═══════════════════════ TESTIMONIALS ═══════════════════════ */}
-        <section id="testimonials" style={{ padding: "120px 0", background: "var(--black)" }}>
-          <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 40px" }}>
-            <FadeIn>
-              <div style={{ textAlign: "center", marginBottom: "80px" }}>
-                <p className="section-label" style={{ marginBottom: "16px" }}>Client Voices</p>
-                <h2 className="font-display" style={{ fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 300, color: "#000000", lineHeight: 1.1 }}>
-                  Trusted by the{" "}
-                  <span style={{ fontStyle: "italic" }} className="text-gold-gradient">Discerning</span>
-                </h2>
-                <GoldDivider />
-              </div>
-            </FadeIn>
-
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px" }}>
-              {testimonials.map((t, i) => (
-                <FadeIn key={i} delay={i * 0.15}>
-                  <div className="testimonial-card">
-                    <div style={{ display: "flex", gap: "3px", marginBottom: "20px" }}>
-                      {[...Array(t.stars)].map((_, j) => (
-                        <FaStar key={j} style={{ color: "#D4AF37", fontSize: "11px" }} />
-                      ))}
-                    </div>
-                    <p style={{ fontSize: "15px", lineHeight: 1.8, color: "rgba(250,250,250,0.65)", marginBottom: "28px", fontStyle: "italic" }} className="font-display">
-                      "{t.quote}"
-                    </p>
-                    <hr className="gold-rule" style={{ marginBottom: "20px" }} />
-                    <div>
-                      <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#FAFAFA" }}>{t.name}</p>
-                      <p style={{ fontSize: "10px", letterSpacing: "0.2em", color: "#D4AF37", textTransform: "uppercase", marginTop: "4px" }}>{t.role}</p>
-                    </div>
-                  </div>
-                </FadeIn>
-              ))}
+      <section id="testimonials" style={{ padding: "120px 0", background: "var(--black)" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 40px" }}>
+          <FadeIn>
+            <div style={{ textAlign: "center", marginBottom: "80px" }}>
+              <p className="section-label" style={{ marginBottom: "16px" }}>Client Voices</p>
+              <h2 className="font-display" style={{ fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 300, color: "#000000", lineHeight: 1.1 }}>
+                Trusted by the{" "}
+                <span style={{ fontStyle: "italic" }} className="text-gold-gradient">Discerning</span>
+              </h2>
+              <GoldDivider />
             </div>
-          </div>
-        </section>
+          </FadeIn>
+
+          {/* Elfsight Google Reviews Widget */}
+          <FadeIn>
+            <div
+              className="elfsight-app-a56f4651-0da2-46bc-a604-2d9893e11666"
+              data-elfsight-app-lazy
+            />
+          </FadeIn>
+        </div>
+      </section>
 
         {/* ═══════════════════════ BOOKING CTA ═══════════════════════ */}
         <section id="booking" style={{ padding: "100px 40px", background: "var(--black-2)", position: "relative", overflow: "hidden" }}>

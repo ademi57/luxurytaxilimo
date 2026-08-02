@@ -16,8 +16,7 @@ export default function Header() {
     { name: t("vehicles"), href: `/${locale}/#vehicles` },
     { name: t("testimonials"), href: `/${locale}/#testimonials` },
     { name: t("booking"), href: `/${locale}/booking` },
-    { name: t("colofon"), href: `/${locale}/colofon` },
-    { name: t("privacy"), href: `/${locale}/privacy` },
+
   ], [t, locale]);
 
   return (

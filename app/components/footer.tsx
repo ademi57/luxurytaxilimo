@@ -101,7 +101,7 @@ export default function Footer() {
             Design by Aonsi Digital
           </a>
           <p style={{ fontSize: "12px", letterSpacing: "0.2em", color: "#D4AF37", textTransform: "uppercase" }}>
-            Champagne & Gold Edition
+            
           </p>
         </div>
       </div>
